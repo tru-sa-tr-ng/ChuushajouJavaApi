@@ -2,6 +2,7 @@ package com.app.chuushajou.controllers;
 
 
 import com.app.chuushajou.dtos.CustomerDTO;
+import com.app.chuushajou.libs.PageInfo;
 import com.app.chuushajou.libs.ResMap;
 import com.app.chuushajou.dtos.VehicleDTO;
 import com.app.chuushajou.models.Vehicle;
@@ -31,15 +32,7 @@ public class VehicleCtrl {
         Page<VehicleDTO> vehiclePage = vehicleService.getVehicles(pageRequest);
 
         return ResponseEntity.ok(
-                ResMap.of(
-                        "status", "success",
-                        "filter" , ResMap.of(
-                                "currentPage", vehiclePage.getNumber()+1,
-                                "totalPage", vehiclePage.getTotalPages(),
-                                "limit", vehiclePage.getSize()
-                        ),
-                        "data", vehiclePage.getContent()
-                        )
+                PageInfo.of(vehiclePage, page, limit)
         );
     }
 
