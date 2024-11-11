@@ -1,6 +1,7 @@
 package com.app.chuushajou.controllers;
 
 
+import com.app.chuushajou.libs.ResMap;
 import com.app.chuushajou.responses.VehicleResponse;
 import com.app.chuushajou.services.VehicleService;
 import lombok.RequiredArgsConstructor;
@@ -23,18 +24,19 @@ public class VehicleCtrl {
     @GetMapping("")
     public ResponseEntity<?> getProducts (
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "limit", required = false) int limit)
+            @RequestParam(value = "limit", defaultValue = "10") int limit)
     {
 
         PageRequest pageRequest = PageRequest.of(page-1, limit);
-        Page<VehicleResponse> vehiclePage = vehicleService.getAllVehicle(pageRequest);
+        Page<VehicleResponse> vehiclePage = vehicleService.getVehicles(pageRequest);
 
 
 
 
         return ResponseEntity.ok(
-                Map.of(
-                        "filter" , Map.of(
+                ResMap.of(
+                        "status", "success",
+                        "filter" , ResMap.of(
                                 "currentPage", vehiclePage.getNumber()+1,
                                 "totalPage", vehiclePage.getTotalPages(),
                                 "limit", vehiclePage.getSize()

@@ -13,7 +13,7 @@ public class VehicleService {
     private final VehicleRepository vehicleRepository;
 
 
-    public Page<VehicleResponse> getAllVehicle(PageRequest pageRequest){
+    public Page<VehicleResponse> getVehicles(PageRequest pageRequest){
         return vehicleRepository.findAll(pageRequest).map(VehicleResponse::getVehicleFromModel);
     }
 
