@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @JsonPropertyOrder({
-        "vehicle_id",
+        "id",
         "customer_id",
         "type_id",
         "license",
