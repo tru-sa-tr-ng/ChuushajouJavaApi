@@ -1,4 +1,4 @@
-package com.app.chuushajou.responses;
+package com.app.chuushajou.dtos;
 
 import com.app.chuushajou.models.Vehicle;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
         "createdAt",
         "updatedAt"
 })
-public class VehicleResponse {
+public class VehicleDTO {
     @JsonProperty("vehicle_id")
     private long vehicleId;
     @JsonProperty("customer_id")
@@ -36,8 +36,8 @@ public class VehicleResponse {
 
 
 
-    public static VehicleResponse getVehicleFromModel(Vehicle vehicle){
-        return new VehicleResponse(
+    public static VehicleDTO getVehicleFromModel(Vehicle vehicle){
+        return new VehicleDTO(
                 vehicle.getId(),
                 vehicle.getCustomer().getId(),
                 vehicle.getType().getId(),

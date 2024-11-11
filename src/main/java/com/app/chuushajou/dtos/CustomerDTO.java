@@ -1,4 +1,4 @@
-package com.app.chuushajou.responses;
+package com.app.chuushajou.dtos;
 
 import com.app.chuushajou.models.Customer;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
         "createdAt",
         "updatedAt"
 })
-public class CustomerResponse {
+public class CustomerDTO {
         @JsonProperty("customer_id")
         private long customerId;
 
@@ -30,8 +30,8 @@ public class CustomerResponse {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        public static CustomerResponse getCustomerFromModel(Customer customer){
-            return new CustomerResponse(
+        public static CustomerDTO getCustomerFromModel(Customer customer){
+            return new CustomerDTO(
                     customer.getId(),
                     customer.getCustomer_name(),
                     customer.getPhone_number(),
@@ -40,4 +40,6 @@ public class CustomerResponse {
                     customer.getUpdatedAt()
             );
         }
+
+
 }
