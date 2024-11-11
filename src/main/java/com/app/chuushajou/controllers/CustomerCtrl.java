@@ -22,7 +22,7 @@ public class CustomerCtrl {
     private final CustomerService customerService;
 
     @GetMapping("")
-    public ResponseEntity<?> getProducts (
+    public ResponseEntity<?> getCustomers (
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "limit", defaultValue = "10") int limit)
     {
