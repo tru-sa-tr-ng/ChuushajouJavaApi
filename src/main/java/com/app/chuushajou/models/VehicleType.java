@@ -7,10 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @Table(name = "vehicle_types")
-public class VehicleType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class VehicleType extends BaseModel {
 
     @Column(name = "title")
     private String title;
