@@ -6,11 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @Table(name = "customers")
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Customer extends BaseModel {
     @Column(name="customer_name")
     private String customer_name;
 
@@ -19,5 +15,4 @@ public class Customer {
 
     @Column(name = "address")
     private String address;
-
 }
