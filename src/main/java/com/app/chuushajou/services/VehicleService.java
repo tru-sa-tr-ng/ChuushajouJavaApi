@@ -1,9 +1,9 @@
 package com.app.chuushajou.services;
 import com.app.chuushajou.dtos.VehicleDTO;
 import com.app.chuushajou.models.Vehicle;
-import com.app.chuushajou.models.Vehicle;
+import com.app.chuushajou.repositories.CustomerRepository;
 import com.app.chuushajou.repositories.VehicleRepository;
-import com.app.chuushajou.dtos.VehicleDTO;
+import com.app.chuushajou.repositories.VehicleTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VehicleService {
     private final VehicleRepository vehicleRepository;
+    private final VehicleTypeRepository vehicleTypeRepository;
+    private final CustomerRepository customerRepository;
 
 
     public Page<VehicleDTO> getVehicles(PageRequest pageRequest){
@@ -25,13 +27,26 @@ public class VehicleService {
         return VehicleDTO.getVehicleFromModel(vehicle);
     }
 
-    public VehicleDTO addVehicle(Vehicle vehicle) {
+    public VehicleDTO addVehicle(VehicleDTO vehicleDTO) {
+        Vehicle vehicle = new Vehicle();
+        vehicle.setLicense(vehicleDTO.getLicense());
+        vehicle.setColor(vehicleDTO.getColor());
+        vehicle.setType(vehicleTypeRepository.getReferenceById(vehicleDTO.getTypeId()));
+        vehicle.setCustomer(customerRepository.getReferenceById(vehicleDTO.getCustomerId()));
+        vehicle.setImg(vehicleDTO.getImg());
         return VehicleDTO.getVehicleFromModel(vehicleRepository.save(vehicle));
     }
 
-    public VehicleDTO updateVehicle(Vehicle vehicle) {
+    public VehicleDTO updateVehicle(VehicleDTO vehicleDTO, long id) {
+        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow();
+        vehicle.setLicense(vehicleDTO.getLicense());
+        vehicle.setColor(vehicleDTO.getColor());
+        vehicle.setType(vehicleTypeRepository.getReferenceById(vehicleDTO.getTypeId()));
+        vehicle.setCustomer(customerRepository.getReferenceById(vehicleDTO.getCustomerId()));
+        vehicle.setImg(vehicleDTO.getImg());
         return VehicleDTO.getVehicleFromModel(vehicleRepository.save(vehicle));
     }
+
 
     public void removeVehicle(long id) {
         vehicleRepository.deleteById(id);

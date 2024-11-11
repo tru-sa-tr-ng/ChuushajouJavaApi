@@ -59,14 +59,14 @@ public class VehicleCtrl {
         }
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<?> addVehicle(@RequestBody Vehicle vehicle) {
+    @PostMapping("/create")
+    public ResponseEntity<?> addVehicle(@RequestBody VehicleDTO vehicleDTO) {
         try {
-            VehicleDTO vehicleDTO = vehicleService.addVehicle(vehicle);
+            VehicleDTO newVehicleDTO = vehicleService.addVehicle(vehicleDTO);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
-                            "data", vehicleDTO)
+                            "data", newVehicleDTO)
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
@@ -76,13 +76,13 @@ public class VehicleCtrl {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateVehicle(@RequestBody Vehicle vehicle) {
+    public ResponseEntity<?> updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable("id") Long id) {
         try {
-            VehicleDTO vehicleDTO = vehicleService.updateVehicle(vehicle);
+            VehicleDTO newVehicleDTO = vehicleService.updateVehicle(vehicleDTO, id);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
-                            "data", vehicleDTO)
+                            "data", newVehicleDTO)
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
