@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
         "updatedAt"
 })
 public class VehicleDTO {
-    @JsonProperty("id")
+    @JsonProperty("vehicle_id")
     private long vehicleId;
     @JsonProperty("customer_id")
     private long customerId;
