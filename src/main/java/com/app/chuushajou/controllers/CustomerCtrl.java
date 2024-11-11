@@ -36,11 +36,11 @@ public class CustomerCtrl {
     @GetMapping("/{id}")
     public ResponseEntity<?> getCustomerById(@PathVariable("id") Long customerId) {
         try {
-            Customer customer = customerService.getCustomerById(customerId);
+            CustomerDTO customerDTO = customerService.getCustomerById(customerId);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
-                            "data", CustomerDTO.getCustomerFromModel(customer))
+                            "data", customerDTO)
             );
         } catch (Exception e) {
             throw new RuntimeException(e);

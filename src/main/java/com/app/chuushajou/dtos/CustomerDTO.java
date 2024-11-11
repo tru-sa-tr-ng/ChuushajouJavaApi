@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
         "updatedAt"
 })
 public class CustomerDTO {
-        @JsonProperty("customer_id")
+        @JsonProperty("id")
         private long customerId;
 
         private String customer_name;
@@ -40,6 +40,4 @@ public class CustomerDTO {
                     customer.getUpdatedAt()
             );
         }
-
-
 }

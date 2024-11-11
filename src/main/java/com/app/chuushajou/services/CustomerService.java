@@ -18,8 +18,8 @@ public class CustomerService {
         return customerRepository.findAll(pageRequest).map(CustomerDTO::getCustomerFromModel);
     }
 
-    public Customer getCustomerById(long id) throws Exception {
-        return customerRepository.findById(id)
-                .orElseThrow();
+    public CustomerDTO getCustomerById(long id) throws Exception {
+        Customer customer = customerRepository.findById(id).orElseThrow();
+        return CustomerDTO.getCustomerFromModel(customer);
     }
 }
