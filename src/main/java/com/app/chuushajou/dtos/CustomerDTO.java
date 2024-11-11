@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @JsonPropertyOrder({
-        "customer_id",
+        "id",
         "customer_name",
         "phone_number",
         "address",
