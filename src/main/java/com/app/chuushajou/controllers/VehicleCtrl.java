@@ -2,7 +2,7 @@ package com.app.chuushajou.controllers;
 
 
 import com.app.chuushajou.libs.ResMap;
-import com.app.chuushajou.responses.VehicleResponse;
+import com.app.chuushajou.dtos.VehicleDTO;
 import com.app.chuushajou.services.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,7 +28,7 @@ public class VehicleCtrl {
     {
 
         PageRequest pageRequest = PageRequest.of(page-1, limit);
-        Page<VehicleResponse> vehiclePage = vehicleService.getVehicles(pageRequest);
+        Page<VehicleDTO> vehiclePage = vehicleService.getVehicles(pageRequest);
 
 
 

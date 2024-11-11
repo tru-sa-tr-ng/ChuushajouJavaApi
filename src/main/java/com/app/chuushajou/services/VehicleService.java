@@ -1,6 +1,6 @@
 package com.app.chuushajou.services;
 import com.app.chuushajou.repositories.VehicleRepository;
-import com.app.chuushajou.responses.VehicleResponse;
+import com.app.chuushajou.dtos.VehicleDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,8 +13,8 @@ public class VehicleService {
     private final VehicleRepository vehicleRepository;
 
 
-    public Page<VehicleResponse> getVehicles(PageRequest pageRequest){
-        return vehicleRepository.findAll(pageRequest).map(VehicleResponse::getVehicleFromModel);
+    public Page<VehicleDTO> getVehicles(PageRequest pageRequest){
+        return vehicleRepository.findAll(pageRequest).map(VehicleDTO::getVehicleFromModel);
     }
 
 }

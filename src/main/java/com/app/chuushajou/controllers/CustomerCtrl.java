@@ -5,7 +5,7 @@ package com.app.chuushajou.controllers;
 import com.app.chuushajou.libs.PageInfo;
 import com.app.chuushajou.libs.ResMap;
 import com.app.chuushajou.models.Customer;
-import com.app.chuushajou.responses.CustomerResponse;
+import com.app.chuushajou.dtos.CustomerDTO;
 import com.app.chuushajou.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,7 @@ public class CustomerCtrl {
             @RequestParam(value = "limit", defaultValue = "10") int limit)
     {
         PageRequest pageRequest = PageRequest.of(page-1, limit);
-        Page<CustomerResponse> customerPage = customerService.getCustomers(pageRequest);
+        Page<CustomerDTO> customerPage = customerService.getCustomers(pageRequest);
         return ResponseEntity.ok(
                 PageInfo.of(customerPage, page, limit)
         );
@@ -40,7 +40,7 @@ public class CustomerCtrl {
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
-                            "data", CustomerResponse.getCustomerFromModel(customer))
+                            "data", CustomerDTO.getCustomerFromModel(customer))
             );
         } catch (Exception e) {
             throw new RuntimeException(e);

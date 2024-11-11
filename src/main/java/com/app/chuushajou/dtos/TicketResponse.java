@@ -1,4 +1,4 @@
-package com.app.chuushajou.responses;
+package com.app.chuushajou.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
