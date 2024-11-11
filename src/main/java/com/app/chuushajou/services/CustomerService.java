@@ -22,4 +22,32 @@ public class CustomerService {
         Customer customer = customerRepository.findById(id).orElseThrow();
         return CustomerDTO.getCustomerFromModel(customer);
     }
+
+    public CustomerDTO addCustomer(CustomerDTO customerDTO) {
+        Customer customer = new Customer();
+
+        customer.setCustomer_name(customerDTO.getCustomer_name());
+        customer.setPhone_number(customerDTO.getPhone_number());
+        customer.setAddress(customerDTO.getAddress());
+        customer.setCreatedAt(customerDTO.getCreatedAt());
+        customer.setUpdatedAt(customerDTO.getUpdatedAt());
+
+        return CustomerDTO.getCustomerFromModel(customerRepository.save(customer));
+    }
+
+    public CustomerDTO updateCustomer(CustomerDTO customerDTO, long id) {
+        Customer customer = customerRepository.findById(id).orElseThrow();
+
+        customer.setCustomer_name(customerDTO.getCustomer_name());
+        customer.setPhone_number(customerDTO.getPhone_number());
+        customer.setAddress(customerDTO.getAddress());
+        customer.setCreatedAt(customerDTO.getCreatedAt());
+        customer.setUpdatedAt(customerDTO.getUpdatedAt());
+
+        return CustomerDTO.getCustomerFromModel(customerRepository.save(customer));
+    }
+
+    public void removeCustomer(long id) {
+        customerRepository.deleteById(id);
+    }
 }

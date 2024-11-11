@@ -29,21 +29,25 @@ public class VehicleService {
 
     public VehicleDTO addVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicle = new Vehicle();
+
         vehicle.setLicense(vehicleDTO.getLicense());
         vehicle.setColor(vehicleDTO.getColor());
         vehicle.setType(vehicleTypeRepository.getReferenceById(vehicleDTO.getTypeId()));
         vehicle.setCustomer(customerRepository.getReferenceById(vehicleDTO.getCustomerId()));
         vehicle.setImg(vehicleDTO.getImg());
+
         return VehicleDTO.getVehicleFromModel(vehicleRepository.save(vehicle));
     }
 
     public VehicleDTO updateVehicle(VehicleDTO vehicleDTO, long id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow();
+
         vehicle.setLicense(vehicleDTO.getLicense());
         vehicle.setColor(vehicleDTO.getColor());
         vehicle.setType(vehicleTypeRepository.getReferenceById(vehicleDTO.getTypeId()));
         vehicle.setCustomer(customerRepository.getReferenceById(vehicleDTO.getCustomerId()));
         vehicle.setImg(vehicleDTO.getImg());
+
         return VehicleDTO.getVehicleFromModel(vehicleRepository.save(vehicle));
     }
 
