@@ -3,6 +3,8 @@ package com.app.chuushajou.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -22,6 +24,9 @@ public class Vehicle extends BaseModel {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ticket> tickets;
 
     @JoinColumn(name = "img")
     private String img;

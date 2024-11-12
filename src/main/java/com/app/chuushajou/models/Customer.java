@@ -2,6 +2,8 @@ package com.app.chuushajou.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -15,4 +17,7 @@ public class Customer extends BaseModel {
 
     @Column(name = "address")
     private String address;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vehicle> vehicles;
 }
