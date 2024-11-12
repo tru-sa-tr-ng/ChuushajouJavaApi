@@ -1,5 +1,32 @@
 package com.app.chuushajou.dtos;
 
-public class VehicleTypeDTO {
 
+import com.app.chuushajou.models.VehicleType;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@JsonPropertyOrder({
+        "id",
+        "title",
+        "cost"
+})
+public class VehicleTypeDTO {
+    @JsonPropertyOrder("id")
+    private long id;
+
+    private String title;
+    private Integer cost;
+
+    public static VehicleTypeDTO getVehicleTypeFromModel(VehicleType vehicleType){
+        return new VehicleTypeDTO(
+                vehicleType.getId(),
+                vehicleType.getTitle(),
+                vehicleType.getCost()
+        );
+    }
 }

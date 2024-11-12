@@ -1,11 +1,9 @@
 package com.app.chuushajou.controllers;
 
 
-import com.app.chuushajou.dtos.CustomerDTO;
 import com.app.chuushajou.libs.PageInfo;
 import com.app.chuushajou.libs.ResMap;
 import com.app.chuushajou.dtos.VehicleDTO;
-import com.app.chuushajou.models.Vehicle;
 import com.app.chuushajou.services.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
