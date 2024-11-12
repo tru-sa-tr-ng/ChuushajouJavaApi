@@ -85,11 +85,12 @@ public class VehicleCtrl {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeVehicle(@PathVariable("id") Long vehicleId) {
         try {
-            vehicleService.removeVehicle(vehicleId);
+            VehicleDTO removedVehicle = vehicleService.removeVehicle(vehicleId);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
-                            "message", "Vehicle removed successfully")
+                            "message", "Vehicle removed successfully",
+                            "data", removedVehicle)
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

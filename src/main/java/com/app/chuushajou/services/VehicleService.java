@@ -1,4 +1,5 @@
 package com.app.chuushajou.services;
+import com.app.chuushajou.dtos.CustomerDTO;
 import com.app.chuushajou.dtos.VehicleDTO;
 import com.app.chuushajou.models.Vehicle;
 import com.app.chuushajou.repositories.CustomerRepository;
@@ -52,7 +53,13 @@ public class VehicleService {
     }
 
 
-    public void removeVehicle(long id) {
-        vehicleRepository.deleteById(id);
+    public VehicleDTO removeVehicle(long id) {
+        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow();
+
+        VehicleDTO vehicleDTO = VehicleDTO.getVehicleFromModel(vehicle);
+
+        vehicleRepository.delete(vehicle);
+
+        return vehicleDTO;
     }
 }
