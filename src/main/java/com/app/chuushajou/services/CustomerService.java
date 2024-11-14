@@ -47,7 +47,14 @@ public class CustomerService {
         return CustomerDTO.getCustomerFromModel(customerRepository.save(customer));
     }
 
-    public void removeCustomer(long id) {
-        customerRepository.deleteById(id);
+    public CustomerDTO removeCustomer(long id) {
+        Customer customer = customerRepository.findById(id).orElseThrow();
+
+        // save lai roi` tra ve thong tin cua customer da bi xoa
+        CustomerDTO customerDTO = CustomerDTO.getCustomerFromModel(customer);
+
+        customerRepository.delete(customer);
+
+        return customerDTO;
     }
 }

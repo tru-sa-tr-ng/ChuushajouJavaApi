@@ -85,11 +85,12 @@ public class CustomerCtrl {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeCustomer(@PathVariable("id") Long customerId) {
         try {
-            customerService.removeCustomer(customerId);
+            CustomerDTO removedCustomer = customerService.removeCustomer(customerId);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
-                            "message", "Customer removed successfully")
+                            "message", "Customer removed successfully",
+                            "data", removedCustomer)
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
@@ -97,4 +98,5 @@ public class CustomerCtrl {
             );
         }
     }
+
 }
