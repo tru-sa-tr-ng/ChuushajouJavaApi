@@ -38,11 +38,20 @@ public class CustomerService {
     public CustomerDTO updateCustomer(CustomerDTO customerDTO, long id) {
         Customer customer = customerRepository.findById(id).orElseThrow();
 
-        customer.setCustomer_name(customerDTO.getCustomer_name());
-        customer.setPhone_number(customerDTO.getPhone_number());
-        customer.setAddress(customerDTO.getAddress());
-        customer.setCreatedAt(customerDTO.getCreatedAt());
-        customer.setUpdatedAt(customerDTO.getUpdatedAt());
+        if (customerDTO.getCustomer_name() != null)
+            customer.setCustomer_name(customerDTO.getCustomer_name());
+
+        if (customerDTO.getPhone_number() != null)
+            customer.setPhone_number(customerDTO.getPhone_number());
+
+        if (customerDTO.getAddress() != null)
+            customer.setAddress(customerDTO.getAddress());
+
+        if (customerDTO.getCreatedAt() != null)
+            customer.setCreatedAt(customerDTO.getCreatedAt());
+
+        if (customerDTO.getUpdatedAt() != null)
+            customer.setUpdatedAt(customerDTO.getUpdatedAt());
 
         return CustomerDTO.getCustomerFromModel(customerRepository.save(customer));
     }
@@ -50,11 +59,8 @@ public class CustomerService {
     public CustomerDTO removeCustomer(long id) {
         Customer customer = customerRepository.findById(id).orElseThrow();
 
-        // save lai roi` tra ve thong tin cua customer da bi xoa
-        CustomerDTO customerDTO = CustomerDTO.getCustomerFromModel(customer);
-
         customerRepository.delete(customer);
 
-        return customerDTO;
+        return CustomerDTO.getCustomerFromModel(customer);
     }
 }

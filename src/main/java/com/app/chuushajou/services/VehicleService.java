@@ -43,11 +43,20 @@ public class VehicleService {
     public VehicleDTO updateVehicle(VehicleDTO vehicleDTO, long id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow();
 
-        vehicle.setLicense(vehicleDTO.getLicense());
-        vehicle.setColor(vehicleDTO.getColor());
-        vehicle.setType(vehicleTypeRepository.getReferenceById(vehicleDTO.getTypeId()));
-        vehicle.setCustomer(customerRepository.getReferenceById(vehicleDTO.getCustomerId()));
-        vehicle.setImg(vehicleDTO.getImg());
+        if (vehicleDTO.getLicense() != null)
+            vehicle.setLicense(vehicleDTO.getLicense());
+
+        if (vehicleDTO.getColor() != null)
+            vehicle.setColor(vehicleDTO.getColor());
+
+        if (vehicleDTO.getTypeId() != 0)
+            vehicle.setType(vehicleTypeRepository.getReferenceById(vehicleDTO.getTypeId()));
+
+        if (vehicleDTO.getCustomerId() != 0)
+            vehicle.setCustomer(customerRepository.getReferenceById(vehicleDTO.getCustomerId()));
+
+        if (vehicleDTO.getImg() != null)
+            vehicle.setImg(vehicleDTO.getImg());
 
         return VehicleDTO.getVehicleFromModel(vehicleRepository.save(vehicle));
     }
@@ -56,10 +65,8 @@ public class VehicleService {
     public VehicleDTO removeVehicle(long id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow();
 
-        VehicleDTO vehicleDTO = VehicleDTO.getVehicleFromModel(vehicle);
-
         vehicleRepository.delete(vehicle);
 
-        return vehicleDTO;
+        return VehicleDTO.getVehicleFromModel(vehicle);
     }
 }

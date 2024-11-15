@@ -50,7 +50,7 @@ public class CustomerCtrl {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<?> addCustomer(@RequestBody CustomerDTO customerDTO) {
         try {
             CustomerDTO newCustomerDTO = customerService.addCustomer(customerDTO);
