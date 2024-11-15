@@ -34,13 +34,20 @@ public class VehicleTypeService {
     public VehicleTypeDTO updateVehicleType(VehicleTypeDTO vehicleTypeDTO, long id) {
         VehicleType vehicleType = vehicleTypeRepository.findById(id).orElseThrow();
 
-        vehicleType.setTitle(vehicleTypeDTO.getTitle());
-        vehicleType.setCost(vehicleTypeDTO.getCost());
+        if (vehicleTypeDTO.getTitle() != null)
+            vehicleType.setTitle(vehicleTypeDTO.getTitle());
+
+        if (vehicleTypeDTO.getCost() != null)
+            vehicleType.setCost(vehicleTypeDTO.getCost());
 
         return VehicleTypeDTO.getVehicleTypeFromModel(vehicleTypeRepository.save(vehicleType));
     }
 
-    public void removeVehicleType(long id) {
-        vehicleTypeRepository.deleteById(id);
+    public VehicleTypeDTO removeVehicleType(long id) {
+        VehicleType vehicleType = vehicleTypeRepository.findById(id).orElseThrow();
+
+        vehicleTypeRepository.delete(vehicleType);
+
+        return VehicleTypeDTO.getVehicleTypeFromModel(vehicleType);
     }
 }

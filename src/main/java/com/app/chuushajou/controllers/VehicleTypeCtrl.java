@@ -47,7 +47,7 @@ public class VehicleTypeCtrl {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<?> addVehicleType(@RequestBody VehicleTypeDTO vehicleTypeDTO) {
         try {
             VehicleTypeDTO newVehicleTypeDTO = vehicleTypeService.addVehicleType(vehicleTypeDTO);
@@ -81,9 +81,17 @@ public class VehicleTypeCtrl {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeVehicleType(@PathVariable("id") Long vehicleTypeId) {
-        vehicleTypeService.removeVehicleType(vehicleTypeId);
-        return ResponseEntity.ok(
-                ResMap.of("status", "success")
-        );
+        try {
+            VehicleTypeDTO removedVehicleTypeDTO = vehicleTypeService.removeVehicleType(vehicleTypeId);
+            return ResponseEntity.ok(
+                    ResMap.of(
+                            "status", "success",
+                            "data", removedVehicleTypeDTO)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    ResMap.of("status", "error", "message", e.getMessage())
+            );
+        }
     }
 }

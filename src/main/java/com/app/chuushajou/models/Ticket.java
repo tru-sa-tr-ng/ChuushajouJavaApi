@@ -2,8 +2,10 @@ package com.app.chuushajou.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -29,9 +31,11 @@ public class Ticket {
     @Column(name = "total")
     private Integer total;
 
-
-
-
+    @PrePersist
+    protected void onCreate() {
+        this.issue_date = Date.valueOf(LocalDateTime.now().toLocalDate());
+        this.expiry_date = Date.valueOf(LocalDateTime.now().toLocalDate().plusYears(1));
+    }
 
 }
 

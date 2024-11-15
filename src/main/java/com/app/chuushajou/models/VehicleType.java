@@ -3,6 +3,8 @@ package com.app.chuushajou.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -15,4 +17,6 @@ public class VehicleType extends BaseModel {
     @Column(name = "cost")
     private Integer cost;
 
+    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vehicle> vehicles;
 }
