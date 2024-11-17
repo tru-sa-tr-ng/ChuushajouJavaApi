@@ -47,7 +47,7 @@ public class VehicleTypeCtrl {
         }
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> addVehicleType(@RequestBody VehicleTypeDTO vehicleTypeDTO) {
         try {
             VehicleTypeDTO newVehicleTypeDTO = vehicleTypeService.addVehicleType(vehicleTypeDTO);
