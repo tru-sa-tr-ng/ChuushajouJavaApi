@@ -22,7 +22,7 @@ public class VehicleTypeService {
         return VehicleTypeDTO.getVehicleTypeFromModel(vehicleTypeRepository.findById(id).orElseThrow());
     }
 
-    public VehicleTypeDTO addVehicleType(VehicleTypeDTO vehicleTypeDTO) {
+    public VehicleTypeDTO createVehicleType(VehicleTypeDTO vehicleTypeDTO) {
         VehicleType vehicleType = new VehicleType();
 
         vehicleType.setTitle(vehicleTypeDTO.getTitle());
@@ -43,7 +43,7 @@ public class VehicleTypeService {
         return VehicleTypeDTO.getVehicleTypeFromModel(vehicleTypeRepository.save(vehicleType));
     }
 
-    public VehicleTypeDTO removeVehicleType(long id) {
+    public VehicleTypeDTO deleteVehicleType(long id) {
         VehicleType vehicleType = vehicleTypeRepository.findById(id).orElseThrow();
 
         vehicleTypeRepository.delete(vehicleType);

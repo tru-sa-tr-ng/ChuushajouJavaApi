@@ -23,7 +23,7 @@ public class TicketService {
         return TicketDTO.getTicketFromModel(ticketRepository.findById(id).orElseThrow());
     }
 
-    public TicketDTO addTicket(TicketDTO ticketDTO) {
+    public TicketDTO createTicket(TicketDTO ticketDTO) {
         Ticket ticket = new Ticket();
 
         ticket.setVehicle(vehicleRepository.getReferenceById(ticketDTO.getVehicleId()));
@@ -56,7 +56,7 @@ public class TicketService {
         return TicketDTO.getTicketFromModel(ticketRepository.save(ticket));
     }
 
-    public TicketDTO removeTicket(long id) {
+    public TicketDTO deleteTicket(long id) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
 
         ticketRepository.delete(ticket);

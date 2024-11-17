@@ -28,7 +28,7 @@ public class VehicleService {
         return VehicleDTO.getVehicleFromModel(vehicle);
     }
 
-    public VehicleDTO addVehicle(VehicleDTO vehicleDTO) {
+    public VehicleDTO createVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicle = new Vehicle();
 
         vehicle.setLicense(vehicleDTO.getLicense());
@@ -62,7 +62,7 @@ public class VehicleService {
     }
 
 
-    public VehicleDTO removeVehicle(long id) {
+    public VehicleDTO deleteVehicle(long id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow();
 
         vehicleRepository.delete(vehicle);

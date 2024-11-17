@@ -47,9 +47,9 @@ public class TicketCtrl {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> addTicket(@RequestBody TicketDTO ticketDTO) {
+    public ResponseEntity<?> createTicket(@RequestBody TicketDTO ticketDTO) {
         try {
-            TicketDTO newTicketDTO = ticketService.addTicket(ticketDTO);
+            TicketDTO newTicketDTO = ticketService.createTicket(ticketDTO);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
@@ -79,9 +79,9 @@ public class TicketCtrl {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removeTicket(@PathVariable("id") Long ticketId) {
+    public ResponseEntity<?> deleteTicket(@PathVariable("id") Long ticketId) {
         try {
-            TicketDTO removedTicketDTO = ticketService.removeTicket(ticketId);
+            TicketDTO removedTicketDTO = ticketService.deleteTicket(ticketId);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
