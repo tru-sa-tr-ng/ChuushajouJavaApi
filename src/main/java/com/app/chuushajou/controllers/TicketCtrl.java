@@ -46,7 +46,7 @@ public class TicketCtrl {
         }
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> addTicket(@RequestBody TicketDTO ticketDTO) {
         try {
             TicketDTO newTicketDTO = ticketService.addTicket(ticketDTO);
