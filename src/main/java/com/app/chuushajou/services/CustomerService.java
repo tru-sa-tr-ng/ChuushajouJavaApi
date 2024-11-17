@@ -23,7 +23,7 @@ public class CustomerService {
         return CustomerDTO.getCustomerFromModel(customer);
     }
 
-    public CustomerDTO addCustomer(CustomerDTO customerDTO) {
+    public CustomerDTO createCustomer(CustomerDTO customerDTO) {
         Customer customer = new Customer();
 
         customer.setCustomer_name(customerDTO.getCustomer_name());
@@ -56,7 +56,7 @@ public class CustomerService {
         return CustomerDTO.getCustomerFromModel(customerRepository.save(customer));
     }
 
-    public CustomerDTO removeCustomer(long id) {
+    public CustomerDTO deleteCustomer(long id) {
         Customer customer = customerRepository.findById(id).orElseThrow();
 
         customerRepository.delete(customer);

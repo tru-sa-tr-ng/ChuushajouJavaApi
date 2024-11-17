@@ -51,9 +51,9 @@ public class CustomerCtrl {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> addCustomer(@RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity<?> createCustomer(@RequestBody CustomerDTO customerDTO) {
         try {
-            CustomerDTO newCustomerDTO = customerService.addCustomer(customerDTO);
+            CustomerDTO newCustomerDTO = customerService.createCustomer(customerDTO);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
@@ -83,9 +83,9 @@ public class CustomerCtrl {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removeCustomer(@PathVariable("id") Long customerId) {
+    public ResponseEntity<?> deleteCustomer(@PathVariable("id") Long customerId) {
         try {
-            CustomerDTO removedCustomer = customerService.removeCustomer(customerId);
+            CustomerDTO removedCustomer = customerService.deleteCustomer(customerId);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
