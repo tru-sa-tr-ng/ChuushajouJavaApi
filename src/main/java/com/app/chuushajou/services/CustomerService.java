@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
-    public Page<CustomerDTO> getCustomers(PageRequest pageRequest){
-        return customerRepository.findAll(pageRequest).map(CustomerDTO::getCustomerFromModel);
+    public Page<CustomerDTO> getCustomers(String search, PageRequest pageRequest){
+        return customerRepository.findCustomers(search, pageRequest).map(CustomerDTO::getCustomerFromModel);
     }
 
     public CustomerDTO getCustomerById(long id) throws Exception {
@@ -52,6 +52,9 @@ public class CustomerService {
 
         if (customerDTO.getUpdatedAt() != null)
             customer.setUpdatedAt(customerDTO.getUpdatedAt());
+
+        if (customerDTO.getRemain() != null)
+            customer.setRemain(customerDTO.getRemain());
 
         return CustomerDTO.getCustomerFromModel(customerRepository.save(customer));
     }

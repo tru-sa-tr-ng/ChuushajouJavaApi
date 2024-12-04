@@ -24,11 +24,11 @@ public class Ticket extends BaseModel {
     private LocalDate issueDate;
 
     @Column(name = "total")
-    private Integer total;
+    private Long total;
 
     public void setIssueDate() {
         this.issueDate = LocalDate.now();
-        this.total = Math.toIntExact(getVehicle().getType().getCost() * (ChronoUnit.DAYS.between(getCreatedAt().toLocalDate(), issueDate)+1));
+        this.total = getVehicle().getType().getCost() * (ChronoUnit.DAYS.between(getCreatedAt().toLocalDate(), issueDate)+1);
     }
 }
 

@@ -35,7 +35,7 @@ public class TicketDTO {
     private LocalDate issueDate;
 
 
-    private Integer total;
+    private Long total;
 
     public static TicketDTO getTicketFromModel(Ticket ticket){
         return new TicketDTO(

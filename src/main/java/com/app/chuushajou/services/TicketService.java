@@ -60,6 +60,11 @@ public class TicketService {
     public TicketDTO returnTicket(long id){
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
         ticket.setIssueDate();
+
+        Long remain = ticket.getVehicle().getCustomer().getRemain();
+        if (remain < ticket.getTotal()) throw new RuntimeException("Customer has not enough money to pay for this ticket");
+        else ticket.getVehicle().getCustomer().setRemain(remain - ticket.getTotal());
+
         return TicketDTO.getTicketFromModel(ticketRepository.save(ticket));
     }
 
