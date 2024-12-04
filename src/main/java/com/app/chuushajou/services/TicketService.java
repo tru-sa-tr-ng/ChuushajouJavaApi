@@ -27,9 +27,7 @@ public class TicketService {
         Ticket ticket = new Ticket();
 
         ticket.setVehicle(vehicleRepository.getReferenceById(ticketDTO.getVehicleId()));
-        ticket.setTicket_type(ticketDTO.getTicket_type());
-        ticket.setIssue_date(ticketDTO.getIssue_date());
-        ticket.setExpiry_date(ticketDTO.getExpiry_date());
+        ticket.setIssueDate(ticketDTO.getIssueDate());
         ticket.setTotal(ticketDTO.getTotal());
 
         return TicketDTO.getTicketFromModel(ticketRepository.save(ticket));
@@ -41,14 +39,9 @@ public class TicketService {
         if (ticketDTO.getVehicleId() != 0)
             ticket.setVehicle(vehicleRepository.getReferenceById(ticketDTO.getVehicleId()));
 
-        if (ticketDTO.getTicket_type() != null)
-            ticket.setTicket_type(ticketDTO.getTicket_type());
 
-        if (ticketDTO.getIssue_date() != null)
-            ticket.setIssue_date(ticketDTO.getIssue_date());
-
-        if (ticketDTO.getExpiry_date() != null)
-            ticket.setExpiry_date(ticketDTO.getExpiry_date());
+        if (ticketDTO.getIssueDate() != null)
+            ticket.setIssueDate(ticketDTO.getIssueDate());
 
         if (ticketDTO.getTotal() != null)
             ticket.setTotal(ticketDTO.getTotal());
@@ -63,4 +56,11 @@ public class TicketService {
 
         return TicketDTO.getTicketFromModel(ticket);
     }
+
+    public TicketDTO returnTicket(long id){
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+        ticket.setIssueDate();
+        return TicketDTO.getTicketFromModel(ticketRepository.save(ticket));
+    }
+
 }

@@ -14,4 +14,6 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
             "(:type_id IS NULL OR v.type.id = :type_id)")
     Page<Vehicle> find(@Param("customer_id") Long customerId,
                                @Param("type_id") Long vehicleId, Pageable pageable);
+
+
 }

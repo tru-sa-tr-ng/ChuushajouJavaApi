@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/vehicle-types")
+@RequestMapping("/vehicle_types")
 @RequiredArgsConstructor
 public class VehicleTypeCtrl {
     private final VehicleTypeService vehicleTypeService;
