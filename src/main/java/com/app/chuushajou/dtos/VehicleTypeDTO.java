@@ -20,13 +20,11 @@ public class VehicleTypeDTO {
     private long id;
 
     private String title;
-    private Integer cost;
 
     public static VehicleTypeDTO getVehicleTypeFromModel(VehicleType vehicleType){
         return new VehicleTypeDTO(
                 vehicleType.getId(),
-                vehicleType.getTitle(),
-                vehicleType.getCost()
+                vehicleType.getTitle()
         );
     }
 }

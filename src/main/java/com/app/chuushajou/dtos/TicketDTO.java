@@ -4,13 +4,11 @@ package com.app.chuushajou.dtos;
 import com.app.chuushajou.models.Ticket;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -30,11 +28,12 @@ public class TicketDTO {
     @JsonProperty("vehicle_id")
     private long vehicleId;
 
-    private String ticket_type;
+    private long ticket_type;
 
-    private Date issue_date;
+    private LocalDateTime expiry_date;
 
-    private Date expiry_date;
+    private LocalDateTime issue_date;
+
 
     private Integer total;
 
@@ -42,9 +41,9 @@ public class TicketDTO {
         return new TicketDTO(
                 ticket.getId(),
                 ticket.getVehicle().getId(),
-                ticket.getTicket_type(),
-                ticket.getIssue_date(),
-                ticket.getExpiry_date(),
+                ticket.getTicketType().getId(),
+                ticket.getCreatedAt(),
+                ticket.getIssueDate(),
                 ticket.getTotal()
         );
     }

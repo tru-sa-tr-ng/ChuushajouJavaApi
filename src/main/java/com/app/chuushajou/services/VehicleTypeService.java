@@ -26,7 +26,6 @@ public class VehicleTypeService {
         VehicleType vehicleType = new VehicleType();
 
         vehicleType.setTitle(vehicleTypeDTO.getTitle());
-        vehicleType.setCost(vehicleTypeDTO.getCost());
 
         return VehicleTypeDTO.getVehicleTypeFromModel(vehicleTypeRepository.save(vehicleType));
     }
@@ -36,9 +35,6 @@ public class VehicleTypeService {
 
         if (vehicleTypeDTO.getTitle() != null)
             vehicleType.setTitle(vehicleTypeDTO.getTitle());
-
-        if (vehicleTypeDTO.getCost() != null)
-            vehicleType.setCost(vehicleTypeDTO.getCost());
 
         return VehicleTypeDTO.getVehicleTypeFromModel(vehicleTypeRepository.save(vehicleType));
     }

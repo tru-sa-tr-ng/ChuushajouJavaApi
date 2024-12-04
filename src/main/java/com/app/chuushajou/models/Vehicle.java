@@ -31,5 +31,6 @@ public class Vehicle extends BaseModel {
     @JoinColumn(name = "img")
     private String img;
 
-
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VehicleEntryExitHistory> histories;
 }

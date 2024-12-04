@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tickets")
 @RequiredArgsConstructor
 public class TicketCtrl {
-    private final TicketService ticketService;
+   /* private final TicketService ticketService;
 
     @GetMapping("")
     public ResponseEntity<?> getTickets (
@@ -92,5 +92,5 @@ public class TicketCtrl {
                     ResMap.of("status", "error", "message", e.getMessage())
             );
         }
-    }
+    }*/
 }

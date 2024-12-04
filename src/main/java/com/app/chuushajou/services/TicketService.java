@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TicketService {
-    private final TicketRepository ticketRepository;
+    /*private final TicketRepository ticketRepository;
     private final VehicleRepository vehicleRepository;
 
     public Page<TicketDTO> getTickets(PageRequest pageRequest){
@@ -62,5 +62,5 @@ public class TicketService {
         ticketRepository.delete(ticket);
 
         return TicketDTO.getTicketFromModel(ticket);
-    }
+    }*/
 }

@@ -41,7 +41,8 @@ public class VehicleCtrl {
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
-                            "data", vehicleDTO)
+                            "data", vehicleDTO
+                            )
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

@@ -1,11 +1,14 @@
 package com.app.chuushajou.dtos;
 
 import com.app.chuushajou.models.Vehicle;
+import com.app.chuushajou.models.VehicleEntryExitHistory;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,6 +20,7 @@ import java.time.LocalDateTime;
         "license",
         "color",
         "img",
+        "entryTime",
         "createdAt",
         "updatedAt"
 })
@@ -31,6 +35,9 @@ public class VehicleDTO {
     private String license;
     private String color;
     private String img;
+
+
+    private List<VehicleEntryExitHistory> vehicleEntryExitHistories;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -44,6 +51,7 @@ public class VehicleDTO {
                 vehicle.getLicense(),
                 vehicle.getColor(),
                 vehicle.getImg(),
+                vehicle.getHistories(),
                 vehicle.getCreatedAt(),
                 vehicle.getUpdatedAt()
         );
