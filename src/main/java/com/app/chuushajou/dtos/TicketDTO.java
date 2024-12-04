@@ -10,7 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,9 +19,7 @@ import java.sql.Date;
 @JsonPropertyOrder({
         "id",
         "vehicle_id",
-        "ticket_type",
         "issue_date",
-        "expiry_date",
         "total"
 })
 public class TicketDTO {
@@ -30,11 +29,11 @@ public class TicketDTO {
     @JsonProperty("vehicle_id")
     private long vehicleId;
 
-    private String ticket_type;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    @JsonProperty("issue_date")
+    private LocalDate issueDate;
 
-    private Date issue_date;
-
-    private Date expiry_date;
 
     private Integer total;
 
@@ -42,9 +41,9 @@ public class TicketDTO {
         return new TicketDTO(
                 ticket.getId(),
                 ticket.getVehicle().getId(),
-                ticket.getTicket_type(),
-                ticket.getIssue_date(),
-                ticket.getExpiry_date(),
+                ticket.getCreatedAt(),
+                ticket.getUpdatedAt(),
+                ticket.getIssueDate(),
                 ticket.getTotal()
         );
     }

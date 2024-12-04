@@ -20,4 +20,7 @@ public class Customer extends BaseModel {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vehicle> vehicles;
+
+    @Column(name = "remain")
+    private Long remain;
 }
