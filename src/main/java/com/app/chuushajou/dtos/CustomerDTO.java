@@ -18,7 +18,8 @@ import java.time.LocalDateTime;
         "phone_number",
         "address",
         "createdAt",
-        "updatedAt"
+        "updatedAt",
+        "remain"
 })
 public class CustomerDTO {
         @JsonProperty("id")
@@ -29,6 +30,7 @@ public class CustomerDTO {
         private String address;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
+        private Long remain;
 
         public static CustomerDTO getCustomerFromModel(Customer customer){
             return new CustomerDTO(
@@ -37,7 +39,8 @@ public class CustomerDTO {
                     customer.getPhone_number(),
                     customer.getAddress(),
                     customer.getCreatedAt(),
-                    customer.getUpdatedAt()
+                    customer.getUpdatedAt(),
+                    customer.getRemain()
             );
         }
 }

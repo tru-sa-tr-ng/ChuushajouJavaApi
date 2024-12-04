@@ -25,10 +25,12 @@ public class CustomerCtrl {
     @GetMapping("")
     public ResponseEntity<?> getCustomers (
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "limit", defaultValue = "10") int limit)
+            @RequestParam(value = "limit", defaultValue = "10") int limit,
+            @RequestParam(value = "search", required = false) String search
+    )
     {
         PageRequest pageRequest = PageRequest.of(page-1, limit);
-        Page<CustomerDTO> customerPage = customerService.getCustomers(pageRequest);
+        Page<CustomerDTO> customerPage = customerService.getCustomers(search, pageRequest);
         return ResponseEntity.ok(
                 PageInfo.of(customerPage, page, limit)
         );

@@ -81,7 +81,7 @@ public class TicketCtrl {
     }
 
     @PutMapping("/return/{id}")
-    public ResponseEntity<?> returnTicket(@PathVariable("id") Long ticketId){
+    public ResponseEntity<?> returnTicket(@PathVariable("id") Long ticketId) {
         try {
             TicketDTO updatedTicketDTO = ticketService.returnTicket(ticketId);
             return ResponseEntity.ok(
@@ -89,7 +89,6 @@ public class TicketCtrl {
                             "status", "success",
                             "data", updatedTicketDTO)
             );
-
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     ResMap.of("status", "error", "message", e.getMessage())
