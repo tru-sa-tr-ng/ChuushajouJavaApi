@@ -19,8 +19,8 @@ public class VehicleService {
     private final CustomerRepository customerRepository;
 
 
-    public Page<VehicleDTO> getVehicles(PageRequest pageRequest){
-        return vehicleRepository.findAll(pageRequest).map(VehicleDTO::getVehicleFromModel);
+    public Page<VehicleDTO> getVehicles(Long customerId, Long typeId, PageRequest pageRequest){
+        return vehicleRepository.find(customerId, typeId, pageRequest).map(VehicleDTO::getVehicleFromModel);
     }
 
     public VehicleDTO getVehicleById(long id) throws Exception {

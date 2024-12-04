@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
@@ -23,11 +24,13 @@ public class VehicleCtrl {
     @GetMapping("")
     public ResponseEntity<?> getVehicles (
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "limit", defaultValue = "10") int limit)
+            @RequestParam(value = "limit", defaultValue = "10") int limit,
+            @RequestParam(value = "customer_id", required = false) Long customerId,
+            @RequestParam(value = "type_id", required = false) Long typeId)
     {
-
         PageRequest pageRequest = PageRequest.of(page-1, limit);
-        Page<VehicleDTO> vehiclePage = vehicleService.getVehicles(pageRequest);
+        //Page<VehicleDTO> vehiclePage = vehicleService.getVehicles(pageRequest);
+        Page<VehicleDTO> vehiclePage = vehicleService.getVehicles(customerId, typeId, pageRequest);
 
         return ResponseEntity.ok(
                 PageInfo.of(vehiclePage, page, limit)
