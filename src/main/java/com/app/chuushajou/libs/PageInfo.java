@@ -28,7 +28,7 @@ public class PageInfo {
                         "limit", limit),
                 "data", page.getContent(),
                 "pages", ResMap.of(
-                        "totalRows", page.getSize(),
+                        "totalRows", page.getTotalElements(),
                         "totalPage", totalPage,
                         "next", nextPage,
                         "previous", previousPage,
