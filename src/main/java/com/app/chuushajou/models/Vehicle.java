@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Table(name = "vehicles")
 public class Vehicle extends BaseModel {
-    @Column(name = "license_plate")
+    @Column(name = "license_plate", unique = true)
     private String license;
 
     @Column(name = "color")

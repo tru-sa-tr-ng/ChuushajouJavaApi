@@ -46,7 +46,26 @@ public class TicketCtrl {
         }
     }
 
-
+    @PostMapping("/check_and_create")
+    public ResponseEntity<?> checkAndCreateTicket(@RequestParam("license_plate") String licensePlate) {
+        try {
+            TicketDTO newTicketDTO = ticketService.checkAndCreateTicket(licensePlate);
+            if (newTicketDTO == null) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                        ResMap.of("status", "error", "message", "Ticket already exists")
+                );
+            }
+            return ResponseEntity.ok(
+                    ResMap.of(
+                            "status", "success",
+                            "data", newTicketDTO)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ResMap.of("status", "error", "message", e.getMessage())
+            );
+        }
+    }
 
     @PostMapping("/create")
     public ResponseEntity<?> createTicket(@RequestBody TicketDTO ticketDTO) {

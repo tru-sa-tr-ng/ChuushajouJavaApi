@@ -12,7 +12,7 @@ public class Customer extends BaseModel {
     @Column(name="customer_name")
     private String customer_name;
 
-    @Column(name="phone_number")
+    @Column(name="phone_number", unique = true)
     private String phone_number;
 
     @Column(name = "address")

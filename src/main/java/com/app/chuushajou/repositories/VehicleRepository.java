@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     @Query("SELECT v FROM Vehicle v WHERE " +
@@ -15,5 +17,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     Page<Vehicle> find(@Param("customer_id") Long customerId,
                        @Param("type_id") Long vehicleId, Pageable pageable);
 
+    @Query("SELECT v FROM Vehicle v WHERE v.license = :license_plate")
+    Optional<Vehicle> findByLicensePlate(@Param("license_plate") String licensePlate);
 
 }
