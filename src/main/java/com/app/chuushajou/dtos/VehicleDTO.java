@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
         "id",
         "customer_id",
         "type_id",
+        "parking_id",
         "license",
         "color",
         "img",
