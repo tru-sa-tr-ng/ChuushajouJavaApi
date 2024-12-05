@@ -2,12 +2,17 @@ package com.app.chuushajou.services;
 
 import com.app.chuushajou.dtos.TicketDTO;
 import com.app.chuushajou.models.Ticket;
+import com.app.chuushajou.models.Vehicle;
 import com.app.chuushajou.repositories.TicketRepository;
 import com.app.chuushajou.repositories.VehicleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +44,6 @@ public class TicketService {
         if (ticketDTO.getVehicleId() != 0)
             ticket.setVehicle(vehicleRepository.getReferenceById(ticketDTO.getVehicleId()));
 
-
         if (ticketDTO.getIssueDate() != null)
             ticket.setIssueDate(ticketDTO.getIssueDate());
 
@@ -64,6 +68,23 @@ public class TicketService {
         Long remain = ticket.getVehicle().getCustomer().getRemain();
         if (remain < ticket.getTotal()) throw new RuntimeException("Customer has not enough money to pay for this ticket");
         else ticket.getVehicle().getCustomer().setRemain(remain - ticket.getTotal());
+
+        return TicketDTO.getTicketFromModel(ticketRepository.save(ticket));
+    }
+
+    public TicketDTO checkAndCreateTicket(String licensePlate) {
+        Optional<Vehicle> vehicleOpt = vehicleRepository.findByLicensePlate(licensePlate);
+
+        if (vehicleOpt.isEmpty()) throw new RuntimeException("Vehicle with license plate " + licensePlate + " not found");
+
+        Vehicle vehicle = vehicleOpt.get();
+
+        if (ticketRepository.existsByVehicleLicense(licensePlate)) return null;
+
+        Ticket ticket = new Ticket();
+        ticket.setVehicle(vehicle);
+        ticket.setCreatedAt(LocalDateTime.now());
+        ticket.setIssueDate();
 
         return TicketDTO.getTicketFromModel(ticketRepository.save(ticket));
     }
