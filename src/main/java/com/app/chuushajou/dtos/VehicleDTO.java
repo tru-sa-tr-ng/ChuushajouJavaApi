@@ -22,11 +22,11 @@ import java.time.LocalDateTime;
 })
 public class VehicleDTO {
     @JsonProperty("id")
-    private long vehicleId;
+    private Long vehicleId;
     @JsonProperty("customer_id")
-    private long customerId;
+    private Long customerId;
     @JsonProperty("type_id")
-    private long typeId;
+    private Long typeId;
 
     private String license;
     private String color;
@@ -47,5 +47,8 @@ public class VehicleDTO {
                 vehicle.getCreatedAt(),
                 vehicle.getUpdatedAt()
         );
+    }
+
+    public VehicleDTO() {
     }
 }

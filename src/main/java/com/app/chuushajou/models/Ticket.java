@@ -19,7 +19,6 @@ public class Ticket extends BaseModel {
     @JoinColumn(name="vehicle_id")
     private Vehicle vehicle;
 
-
     @Column (name = "issue_date")
     private LocalDate issueDate;
 
