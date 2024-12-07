@@ -38,6 +38,7 @@ public class TicketDTO {
     private Long total;
 
     public TicketDTO(Long vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public static TicketDTO getTicketFromModel(Ticket ticket){

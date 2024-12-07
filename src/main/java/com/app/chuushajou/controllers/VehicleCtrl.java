@@ -26,11 +26,12 @@ public class VehicleCtrl {
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "limit", defaultValue = "10") int limit,
             @RequestParam(value = "customer_id", required = false) Long customerId,
-            @RequestParam(value = "type_id", required = false) Long typeId
+            @RequestParam(value = "type_id", required = false) Long typeId,
+            @RequestParam(value = "license", required = false) String license
         )
     {
         PageRequest pageRequest = PageRequest.of(page-1, limit);
-        Page<VehicleDTO> vehiclePage = vehicleService.getVehicles(customerId, typeId, pageRequest);
+        Page<VehicleDTO> vehiclePage = vehicleService.getVehicles(customerId, typeId, license, pageRequest);
 
         return ResponseEntity.ok(
                 PageInfo.of(vehiclePage, page, limit)
