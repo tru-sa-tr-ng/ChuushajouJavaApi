@@ -26,10 +26,11 @@ public class Vehicle extends BaseModel {
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "parking_space")
-    private ParkingSpace position;
+    @JoinColumn(name = "parking_id")
+    private Parking parking;
 
-    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
+
     private List<Ticket> tickets;
 
     @JoinColumn(name = "img")
