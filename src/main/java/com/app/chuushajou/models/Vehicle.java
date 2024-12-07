@@ -30,6 +30,7 @@ public class Vehicle extends BaseModel {
     private Parking parking;
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
+
     private List<Ticket> tickets;
 
     @JoinColumn(name = "img")

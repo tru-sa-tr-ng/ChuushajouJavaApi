@@ -8,8 +8,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "vehicle_types")
-public class VehicleType extends BaseModel {
+@Table(name = "ticket_types")
+public class TicketType extends BaseModel {
 
     @Column(name = "title")
     private String title;
@@ -17,6 +17,9 @@ public class VehicleType extends BaseModel {
     @Column(name = "cost")
     private Integer cost;
 
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
-    private List<Vehicle> vehicles;
+    @Column(name="activeDays")
+    private Integer days;
+
+
 }
+

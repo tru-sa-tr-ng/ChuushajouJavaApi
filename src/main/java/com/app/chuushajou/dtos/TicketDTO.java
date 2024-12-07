@@ -24,10 +24,10 @@ import java.time.LocalDateTime;
 })
 public class TicketDTO {
     @JsonProperty("id")
-    private long ticketId;
+    private Long ticketId;
 
     @JsonProperty("vehicle_id")
-    private long vehicleId;
+    private Long vehicleId;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -36,6 +36,10 @@ public class TicketDTO {
 
 
     private Long total;
+
+    public TicketDTO(Long vehicleId) {
+        this.vehicleId = vehicleId;
+    }
 
     public static TicketDTO getTicketFromModel(Ticket ticket){
         return new TicketDTO(

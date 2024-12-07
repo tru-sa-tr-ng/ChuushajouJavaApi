@@ -23,11 +23,14 @@ import java.time.LocalDateTime;
 })
 public class VehicleDTO {
     @JsonProperty("id")
-    private long vehicleId;
+    private Long vehicleId;
     @JsonProperty("customer_id")
-    private long customerId;
+    private Long customerId;
     @JsonProperty("type_id")
-    private long typeId;
+    private Long typeId;
+
+    @JsonProperty("position")
+    private String position;
 
     private String license;
     private String color;
@@ -40,13 +43,17 @@ public class VehicleDTO {
     public static VehicleDTO getVehicleFromModel(Vehicle vehicle){
         return new VehicleDTO(
                 vehicle.getId(),
-                vehicle.getCustomer().getId(),
-                vehicle.getType().getId(),
+                (vehicle.getCustomer() != null) ? vehicle.getCustomer().getId() : null,
+                (vehicle.getType() != null) ? vehicle.getType().getId() : null,
+                (vehicle.getPosition() != null) ? vehicle.getPosition().getSpaceName() : null,
                 vehicle.getLicense(),
                 vehicle.getColor(),
                 vehicle.getImg(),
                 vehicle.getCreatedAt(),
                 vehicle.getUpdatedAt()
         );
+    }
+
+    public VehicleDTO() {
     }
 }

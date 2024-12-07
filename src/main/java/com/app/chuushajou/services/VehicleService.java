@@ -1,6 +1,6 @@
 package com.app.chuushajou.services;
-import com.app.chuushajou.dtos.CustomerDTO;
 import com.app.chuushajou.dtos.VehicleDTO;
+import com.app.chuushajou.models.Customer;
 import com.app.chuushajou.models.Vehicle;
 import com.app.chuushajou.repositories.CustomerRepository;
 import com.app.chuushajou.repositories.VehicleRepository;
@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -19,8 +21,8 @@ public class VehicleService {
     private final CustomerRepository customerRepository;
 
 
-    public Page<VehicleDTO> getVehicles(Long customerId, Long typeId, PageRequest pageRequest){
-        return vehicleRepository.find(customerId, typeId, pageRequest).map(VehicleDTO::getVehicleFromModel);
+    public Page<VehicleDTO> getVehicles(Long customerId, Long typeId, String license,PageRequest pageRequest){
+        return vehicleRepository.find(customerId, typeId, license,pageRequest).map(VehicleDTO::getVehicleFromModel);
     }
 
     public VehicleDTO getVehicleById(long id) throws Exception {
@@ -29,12 +31,12 @@ public class VehicleService {
     }
 
     public VehicleDTO createVehicle(VehicleDTO vehicleDTO) {
+        Optional<Customer> customerOpt = customerRepository.findById(vehicleDTO.getCustomerId());
         Vehicle vehicle = new Vehicle();
-
         vehicle.setLicense(vehicleDTO.getLicense());
         vehicle.setColor(vehicleDTO.getColor());
         vehicle.setType(vehicleTypeRepository.getReferenceById(vehicleDTO.getTypeId()));
-        vehicle.setCustomer(customerRepository.getReferenceById(vehicleDTO.getCustomerId()));
+        vehicle.setCustomer(customerOpt.orElse(null));
         vehicle.setImg(vehicleDTO.getImg());
 
         return VehicleDTO.getVehicleFromModel(vehicleRepository.save(vehicle));
@@ -49,10 +51,10 @@ public class VehicleService {
         if (vehicleDTO.getColor() != null)
             vehicle.setColor(vehicleDTO.getColor());
 
-        if (vehicleDTO.getTypeId() != 0)
+        if (vehicleDTO.getTypeId() != null)
             vehicle.setType(vehicleTypeRepository.getReferenceById(vehicleDTO.getTypeId()));
 
-        if (vehicleDTO.getCustomerId() != 0)
+        if (vehicleDTO.getCustomerId() != null)
             vehicle.setCustomer(customerRepository.getReferenceById(vehicleDTO.getCustomerId()));
 
         if (vehicleDTO.getImg() != null)
@@ -69,4 +71,5 @@ public class VehicleService {
 
         return VehicleDTO.getVehicleFromModel(vehicle);
     }
+
 }
