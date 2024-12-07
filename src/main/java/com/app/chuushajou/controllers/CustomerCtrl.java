@@ -6,7 +6,9 @@ import com.app.chuushajou.libs.PageInfo;
 import com.app.chuushajou.libs.ResMap;
 import com.app.chuushajou.models.Customer;
 import com.app.chuushajou.dtos.CustomerDTO;
+import com.app.chuushajou.repositories.CustomerRepository;
 import com.app.chuushajou.services.CustomerService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CustomerCtrl {
     private final CustomerService customerService;
+    private final CustomerRepository customerRepository;
 
     @GetMapping("")
     public ResponseEntity<?> getCustomers (
@@ -50,6 +53,11 @@ public class CustomerCtrl {
                     ResMap.of("status", "error", "message", e.getMessage())
             );
         }
+    }
+
+    @PostConstruct
+    public void createGuestCustomer() {
+        customerService.createGuestCustomer();
     }
 
     @PostMapping("/create")
