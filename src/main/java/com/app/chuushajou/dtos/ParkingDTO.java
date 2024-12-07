@@ -1,5 +1,6 @@
 package com.app.chuushajou.dtos;
 
+import com.app.chuushajou.models.Parking;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
@@ -21,14 +22,22 @@ public class ParkingDTO {
     @JsonProperty("parking_name")
     private String name;
 
-    @JsonProperty("location")
     private String location;
 
-    public static ParkingDTO getParkingFromModel(com.app.chuushajou.models.Parking parking){
+    private Integer maxSlot;
+
+    private Integer used;
+    private Integer avaiableSlot;
+
+
+    public static ParkingDTO getParkingFromModel(Parking parking){
         return new ParkingDTO(
                 parking.getId(),
                 parking.getName(),
-                parking.getLocation()
+                parking.getLocation(),
+                parking.getMaxSlot(),
+                parking.getVehicles().size(),
+                parking.getAvaiableSlot()
         );
     }
 

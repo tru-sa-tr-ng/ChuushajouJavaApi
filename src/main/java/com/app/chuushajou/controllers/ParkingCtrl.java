@@ -17,15 +17,11 @@ public class ParkingCtrl {
     @PostMapping("/{parkingId}/add_vehicle/{vehicleId}")
     public ResponseEntity<?> addVehicleToParking(@PathVariable Long parkingId, @PathVariable Long vehicleId) {
         try {
-            parkingService.addVehicleToParking(parkingId, vehicleId);
-
-            int slotsUsed = parkingService.getVehicleCountInParking(parkingId);
-            int slotsRemain = Parking.slotsAvailable - slotsUsed;
-
+            Integer slotRemain = parkingService.addVehicleToParking(parkingId, vehicleId);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
-                            "data", "Vehicle added to parking, slots remain: " + slotsRemain)
+                            "data", "Vehicle added to parking, slots remain: " + slotRemain)
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
@@ -37,15 +33,12 @@ public class ParkingCtrl {
     @DeleteMapping("/{parkingId}/remove_vehicle/{vehicleId}")
     public ResponseEntity<?> removeVehicleFromParking(@PathVariable Long parkingId, @PathVariable Long vehicleId) {
         try {
-            parkingService.removeVehicleFromParking(parkingId, vehicleId);
-
-            int slotsUsed = parkingService.getVehicleCountInParking(parkingId);
-            int slotsRemain = Parking.slotsAvailable - slotsUsed;
+            Integer slotRemain = parkingService.removeVehicleFromParking(parkingId, vehicleId);
 
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
-                            "data", "Vehicle remove from parking, slots remain: " + slotsRemain)
+                            "data", "Vehicle remove from parking, slots remain: " + slotRemain)
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(

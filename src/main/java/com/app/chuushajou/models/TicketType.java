@@ -11,8 +11,7 @@ import java.util.List;
 @Table(name = "ticket_types")
 public class TicketType extends BaseModel {
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "title")    private String title;
 
     @Column(name = "cost")
     private Integer cost;

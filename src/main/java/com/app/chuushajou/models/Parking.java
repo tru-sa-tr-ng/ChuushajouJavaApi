@@ -23,5 +23,11 @@ public class Parking {
     @Column(name = "location")
     private String location;
 
-    public static int slotsAvailable = 100;
+    @Column(name = "max_slot")
+    private Integer maxSlot;
+
+    public Integer getAvaiableSlot(){
+        if (maxSlot == null || maxSlot - vehicles.size() < 0) return 0;
+        return maxSlot - vehicles.size();
+    }
 }

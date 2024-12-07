@@ -1,5 +1,6 @@
 package com.app.chuushajou.services;
 
+import com.app.chuushajou.dtos.ParkingDTO;
 import com.app.chuushajou.models.Parking;
 import com.app.chuushajou.models.Vehicle;
 import com.app.chuushajou.repositories.ParkingRepository;
@@ -18,12 +19,12 @@ public class ParkingService {
     private final VehicleRepository vehicleRepository;
 
 
-    public void addVehicleToParking(long parkingId, long vehicleId) {
+    public Integer addVehicleToParking(long parkingId, long vehicleId) {
         Optional<Parking> parkingOpt = parkingRepository.findById(parkingId);
         if (parkingOpt.isEmpty()) throw new RuntimeException("Parking not found");
 
         Parking parking = parkingOpt.get();
-        if (parking.getVehicles().size() >= Parking.slotsAvailable) throw new RuntimeException("Parking is full");
+        if (parking.getVehicles().size() >= parking.getAvaiableSlot()) throw new RuntimeException("Parking is full");
 
         Optional<Vehicle> vehicleOpt = vehicleRepository.findById(vehicleId);
         if (vehicleOpt.isEmpty()) throw new RuntimeException("Vehicle not found");
@@ -34,14 +35,16 @@ public class ParkingService {
         vehicle.setParking(parking);
         parking.getVehicles().add(vehicle);
         parkingRepository.save(parking);
+
+        return parking.getAvaiableSlot();
     }
 
-    public void removeVehicleFromParking(long parkingId, long vehicleId) {
+    public Integer removeVehicleFromParking(long parkingId, long vehicleId) {
         Optional<Parking> parkingOpt = parkingRepository.findById(parkingId);
         if (parkingOpt.isEmpty()) throw new RuntimeException("Parking not found");
 
         Parking parking = parkingOpt.get();
-        if (parking.getVehicles().size() >= Parking.slotsAvailable) throw new RuntimeException("Parking is full");
+        if (parking.getVehicles().size() >= parking.getAvaiableSlot()) throw new RuntimeException("Parking is full");
 
         Optional<Vehicle> vehicleOpt = vehicleRepository.findById(vehicleId);
         if (vehicleOpt.isEmpty()) throw new RuntimeException("Vehicle not found");
@@ -52,6 +55,8 @@ public class ParkingService {
         vehicle.setParking(null);
         parking.getVehicles().remove(vehicle);
         parkingRepository.save(parking);
+
+        return parking.getAvaiableSlot();
     }
 
     public int getVehicleCountInParking(long parkingId) {
@@ -60,6 +65,14 @@ public class ParkingService {
 
         Parking parking = parkingOpt.get();
         return parking.getVehicles().size();
+    }
+
+    public ParkingDTO getParking(long parkingId){
+        Optional<Parking> parkingOpt = parkingRepository.findById(parkingId);
+        if (parkingOpt.isEmpty()) throw new RuntimeException("Parking not found");
+
+        Parking parking = parkingOpt.get();
+        return ParkingDTO.getParkingFromModel(parking);
     }
 
 }
