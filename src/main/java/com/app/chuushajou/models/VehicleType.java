@@ -17,6 +17,6 @@ public class VehicleType extends BaseModel {
     @Column(name = "cost")
     private Integer cost;
 
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
     private List<Vehicle> vehicles;
 }

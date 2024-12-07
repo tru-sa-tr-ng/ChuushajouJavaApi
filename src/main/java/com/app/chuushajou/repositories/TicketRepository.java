@@ -10,7 +10,4 @@ import org.springframework.data.repository.query.Param;
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Override
     Page<Ticket> findAll(Pageable pageable);
-
-    @Query("SELECT COUNT(t) > 0 FROM Ticket t WHERE t.vehicle.license = :license_plate")
-    boolean existsByVehicleLicense(@Param("license_plate") String licensePlate);
 }

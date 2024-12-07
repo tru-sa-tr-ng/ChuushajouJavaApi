@@ -27,8 +27,6 @@ import java.util.Optional;
 public class TicketService {
     private final TicketRepository ticketRepository;
     private final VehicleRepository vehicleRepository;
-    private final VehicleTypeRepository vehicleTypeRepository;
-    private final CustomerRepository customerRepository;
     private final VehicleService vehicleService;
 
     public Page<TicketDTO> getTickets(PageRequest pageRequest){
@@ -52,7 +50,7 @@ public class TicketService {
     public TicketDTO updateTicket(TicketDTO ticketDTO, long id) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
 
-        if (ticketDTO.getVehicleId() != 0)
+        if (ticketDTO.getVehicleId() != null)
             ticket.setVehicle(vehicleRepository.getReferenceById(ticketDTO.getVehicleId()));
 
         if (ticketDTO.getIssueDate() != null)
@@ -93,20 +91,15 @@ public class TicketService {
     }
 
     public TicketDTO checkAndCreateTicket(VehicleDTO vehicleDTO) {
-        Optional<Vehicle> vehicleOpt = vehicleRepository.findByLicensePlate(vehicleDTO.getLicense());
+        Optional<Vehicle> vehicleOpt = vehicleRepository.findByLicense(vehicleDTO.getLicense());
 
-        if (vehicleOpt.isEmpty()){
-            VehicleDTO newVehicleDTO = vehicleService.createVehicle(vehicleDTO);
-            TicketDTO ticketDTO = new TicketDTO(newVehicleDTO.getVehicleId());
-            return createTicket(ticketDTO);
-        }
-        else {
-            VehicleDTO newVehicleDTO = vehicleService.updateVehicle(vehicleDTO, vehicleOpt.get().getId());
-            TicketDTO ticketDTO = new TicketDTO(newVehicleDTO.getVehicleId());
-            return createTicket(ticketDTO);
+        VehicleDTO newVehicleDTO;
 
-        }
+        if (vehicleOpt.isEmpty()) newVehicleDTO = vehicleService.createVehicle(vehicleDTO);
+        else newVehicleDTO = vehicleService.updateVehicle(vehicleDTO, vehicleOpt.get().getId());
 
+        TicketDTO ticketDTO = new TicketDTO(newVehicleDTO.getVehicleId());
+        return createTicket(ticketDTO);
 
     }
 

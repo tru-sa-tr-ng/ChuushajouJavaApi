@@ -1,9 +1,7 @@
 package com.app.chuushajou.services;
-import com.app.chuushajou.dtos.CustomerDTO;
 import com.app.chuushajou.dtos.VehicleDTO;
 import com.app.chuushajou.models.Customer;
 import com.app.chuushajou.models.Vehicle;
-import com.app.chuushajou.models.VehicleType;
 import com.app.chuushajou.repositories.CustomerRepository;
 import com.app.chuushajou.repositories.VehicleRepository;
 import com.app.chuushajou.repositories.VehicleTypeRepository;
@@ -23,8 +21,8 @@ public class VehicleService {
     private final CustomerRepository customerRepository;
 
 
-    public Page<VehicleDTO> getVehicles(Long customerId, Long typeId, PageRequest pageRequest){
-        return vehicleRepository.find(customerId, typeId, pageRequest).map(VehicleDTO::getVehicleFromModel);
+    public Page<VehicleDTO> getVehicles(Long customerId, Long typeId, String license,PageRequest pageRequest){
+        return vehicleRepository.find(customerId, typeId, license,pageRequest).map(VehicleDTO::getVehicleFromModel);
     }
 
     public VehicleDTO getVehicleById(long id) throws Exception {
@@ -53,10 +51,10 @@ public class VehicleService {
         if (vehicleDTO.getColor() != null)
             vehicle.setColor(vehicleDTO.getColor());
 
-        if (vehicleDTO.getTypeId() != 0)
+        if (vehicleDTO.getTypeId() != null)
             vehicle.setType(vehicleTypeRepository.getReferenceById(vehicleDTO.getTypeId()));
 
-        if (vehicleDTO.getCustomerId() != 0)
+        if (vehicleDTO.getCustomerId() != null)
             vehicle.setCustomer(customerRepository.getReferenceById(vehicleDTO.getCustomerId()));
 
         if (vehicleDTO.getImg() != null)
@@ -73,4 +71,5 @@ public class VehicleService {
 
         return VehicleDTO.getVehicleFromModel(vehicle);
     }
+
 }

@@ -18,7 +18,7 @@ public class Customer extends BaseModel {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Vehicle> vehicles;
 
     @Column(name = "remain")
