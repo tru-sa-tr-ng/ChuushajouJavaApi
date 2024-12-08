@@ -31,12 +31,15 @@ public class VehicleService {
     }
 
     public VehicleDTO createVehicle(VehicleDTO vehicleDTO) {
-        Optional<Customer> customerOpt = customerRepository.findById(vehicleDTO.getCustomerId());
         Vehicle vehicle = new Vehicle();
+        if (vehicleDTO.getCustomerId() == null) vehicle.setCustomer(null);
+        else {
+            Optional<Customer> customerOpt = customerRepository.findById(vehicleDTO.getCustomerId());
+            if (customerOpt.isEmpty()) throw new RuntimeException("Can not found customer with id = " + vehicleDTO.getCustomerId());
+        }
         vehicle.setLicense(vehicleDTO.getLicense());
         vehicle.setColor(vehicleDTO.getColor());
         vehicle.setType(vehicleTypeRepository.getReferenceById(vehicleDTO.getTypeId()));
-        vehicle.setCustomer(customerOpt.orElse(null));
         vehicle.setImg(vehicleDTO.getImg());
 
         return VehicleDTO.getVehicleFromModel(vehicleRepository.save(vehicle));

@@ -2,6 +2,7 @@ package com.app.chuushajou.services;
 
 import com.app.chuushajou.dtos.ParkingDTO;
 import com.app.chuushajou.models.Parking;
+import com.app.chuushajou.models.Ticket;
 import com.app.chuushajou.models.Vehicle;
 import com.app.chuushajou.repositories.ParkingRepository;
 import com.app.chuushajou.repositories.VehicleRepository;
@@ -24,7 +25,7 @@ public class ParkingService {
         if (parkingOpt.isEmpty()) throw new RuntimeException("Parking not found");
 
         Parking parking = parkingOpt.get();
-        if (parking.getVehicles().size() >= parking.getAvaiableSlot()) throw new RuntimeException("Parking is full");
+        if (parking.getAvaiableSlot() == 0) throw new RuntimeException("Parking is full");
 
         Optional<Vehicle> vehicleOpt = vehicleRepository.findById(vehicleId);
         if (vehicleOpt.isEmpty()) throw new RuntimeException("Vehicle not found");
@@ -44,7 +45,6 @@ public class ParkingService {
         if (parkingOpt.isEmpty()) throw new RuntimeException("Parking not found");
 
         Parking parking = parkingOpt.get();
-        if (parking.getVehicles().size() >= parking.getAvaiableSlot()) throw new RuntimeException("Parking is full");
 
         Optional<Vehicle> vehicleOpt = vehicleRepository.findById(vehicleId);
         if (vehicleOpt.isEmpty()) throw new RuntimeException("Vehicle not found");

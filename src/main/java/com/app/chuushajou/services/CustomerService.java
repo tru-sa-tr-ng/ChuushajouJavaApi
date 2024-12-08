@@ -14,6 +14,20 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
+    public Customer createGuestCustomer() {
+        Customer findGuestCustomer = customerRepository.findById(0L).orElse(null);
+        if (findGuestCustomer != null) return findGuestCustomer;
+
+        Customer customer = new Customer();
+        customer.setId(0L);
+        customer.setCustomer_name("Guest");
+        customer.setPhone_number("0000000000");
+        customer.setAddress("Guest");
+        customer.setRemain(0L);
+
+        return customerRepository.save(customer);
+    }
+
     public Page<CustomerDTO> getCustomers(String search, PageRequest pageRequest){
         return customerRepository.findCustomers(search, pageRequest).map(CustomerDTO::getCustomerFromModel);
     }

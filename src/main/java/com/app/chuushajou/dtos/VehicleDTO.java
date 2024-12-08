@@ -29,8 +29,8 @@ public class VehicleDTO {
     @JsonProperty("type_id")
     private Long typeId;
 
-    @JsonProperty("position")
-    private String position;
+    @JsonProperty("parking_id")
+    private Long parkingId;
 
     private String license;
     private String color;
@@ -45,7 +45,7 @@ public class VehicleDTO {
                 vehicle.getId(),
                 (vehicle.getCustomer() != null) ? vehicle.getCustomer().getId() : null,
                 (vehicle.getType() != null) ? vehicle.getType().getId() : null,
-                (vehicle.getPosition() != null) ? vehicle.getPosition().getSpaceName() : null,
+                (vehicle.getParking() != null) ? vehicle.getParking().getId() : null,
                 vehicle.getLicense(),
                 vehicle.getColor(),
                 vehicle.getImg(),
