@@ -46,7 +46,7 @@ public class CustomerCtrl {
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
-                            "data", customerDTO)
+                            "data", ResMap.of("customer", customerDTO))
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(

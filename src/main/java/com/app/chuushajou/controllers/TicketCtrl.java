@@ -2,6 +2,7 @@ package com.app.chuushajou.controllers;
 
 
 import com.app.chuushajou.dtos.TicketDTO;
+import com.app.chuushajou.dtos.VehicleDTO;
 import com.app.chuushajou.libs.PageInfo;
 import com.app.chuushajou.libs.ResMap;
 import com.app.chuushajou.services.TicketService;
@@ -46,15 +47,10 @@ public class TicketCtrl {
         }
     }
 
-    @PostMapping("/check_and_create")
-    public ResponseEntity<?> checkAndCreateTicket(@RequestParam("license_plate") String licensePlate) {
+    @PostMapping("/check")
+    public ResponseEntity<?> checkAndCreateTicket(@RequestBody VehicleDTO vehicle) {
         try {
-            TicketDTO newTicketDTO = ticketService.checkAndCreateTicket(licensePlate);
-            if (newTicketDTO == null) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                        ResMap.of("status", "error", "message", "Ticket already exists")
-                );
-            }
+            TicketDTO newTicketDTO = ticketService.checkAndCreateTicket(vehicle);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
@@ -100,9 +96,10 @@ public class TicketCtrl {
     }
 
     @PutMapping("/return/{id}")
-    public ResponseEntity<?> returnTicket(@PathVariable("id") Long ticketId) {
+    public ResponseEntity<?> returnTicket(@PathVariable("id") Long ticketId,
+                                          @RequestParam(value ="customer_id", required = false) Long customerId) {
         try {
-            TicketDTO updatedTicketDTO = ticketService.returnTicket(ticketId);
+            Object updatedTicketDTO = ticketService.returnTicket(ticketId);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",

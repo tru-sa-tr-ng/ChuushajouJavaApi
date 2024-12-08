@@ -1,17 +1,25 @@
 package com.app.chuushajou.services;
 
 import com.app.chuushajou.dtos.TicketDTO;
+import com.app.chuushajou.dtos.VehicleDTO;
+import com.app.chuushajou.libs.ResMap;
+import com.app.chuushajou.models.Customer;
 import com.app.chuushajou.models.Ticket;
 import com.app.chuushajou.models.Vehicle;
+import com.app.chuushajou.models.VehicleType;
+import com.app.chuushajou.repositories.CustomerRepository;
 import com.app.chuushajou.repositories.TicketRepository;
 import com.app.chuushajou.repositories.VehicleRepository;
+import com.app.chuushajou.repositories.VehicleTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -19,6 +27,7 @@ import java.util.Optional;
 public class TicketService {
     private final TicketRepository ticketRepository;
     private final VehicleRepository vehicleRepository;
+    private final VehicleService vehicleService;
 
     public Page<TicketDTO> getTickets(PageRequest pageRequest){
         return ticketRepository.findAll(pageRequest).map(TicketDTO::getTicketFromModel);
@@ -41,7 +50,7 @@ public class TicketService {
     public TicketDTO updateTicket(TicketDTO ticketDTO, long id) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
 
-        if (ticketDTO.getVehicleId() != 0)
+        if (ticketDTO.getVehicleId() != null)
             ticket.setVehicle(vehicleRepository.getReferenceById(ticketDTO.getVehicleId()));
 
         if (ticketDTO.getIssueDate() != null)
@@ -61,32 +70,37 @@ public class TicketService {
         return TicketDTO.getTicketFromModel(ticket);
     }
 
-    public TicketDTO returnTicket(long id){
+    public Object returnTicket(long id){
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
         ticket.setIssueDate();
 
-        Long remain = ticket.getVehicle().getCustomer().getRemain();
-        if (remain < ticket.getTotal()) throw new RuntimeException("Customer has not enough money to pay for this ticket");
-        else ticket.getVehicle().getCustomer().setRemain(remain - ticket.getTotal());
 
-        return TicketDTO.getTicketFromModel(ticketRepository.save(ticket));
+        Customer customer = ticket.getVehicle().getCustomer();
+
+        if (customer == null || customer.getId() == 0 ) {
+            return "Please pay with tiền mặt(t ngu tiếng anh nên để thg nào vào nhìn được thì fix sau nhé)";
+        } else {
+            Long remain = customer.getRemain();
+            if (remain < ticket.getTotal()) throw new RuntimeException("Customer has not enough money to pay for this ticket: " + customer.getRemain());
+            else ticket.getVehicle().getCustomer().setRemain(remain - ticket.getTotal());
+            return ticket;
+        }
+
+
+
     }
 
-    public TicketDTO checkAndCreateTicket(String licensePlate) {
-        Optional<Vehicle> vehicleOpt = vehicleRepository.findByLicensePlate(licensePlate);
+    public TicketDTO checkAndCreateTicket(VehicleDTO vehicleDTO) {
+        Optional<Vehicle> vehicleOpt = vehicleRepository.findByLicense(vehicleDTO.getLicense());
 
-        if (vehicleOpt.isEmpty()) throw new RuntimeException("Vehicle with license plate " + licensePlate + " not found");
+        VehicleDTO newVehicleDTO;
 
-        Vehicle vehicle = vehicleOpt.get();
+        if (vehicleOpt.isEmpty()) newVehicleDTO = vehicleService.createVehicle(vehicleDTO);
+        else newVehicleDTO = vehicleService.updateVehicle(vehicleDTO, vehicleOpt.get().getId());
 
-        if (ticketRepository.existsByVehicleLicense(licensePlate)) return null;
+        TicketDTO ticketDTO = new TicketDTO(newVehicleDTO.getVehicleId());
+        return createTicket(ticketDTO);
 
-        Ticket ticket = new Ticket();
-        ticket.setVehicle(vehicle);
-        ticket.setCreatedAt(LocalDateTime.now());
-        ticket.setIssueDate();
-
-        return TicketDTO.getTicketFromModel(ticketRepository.save(ticket));
     }
 
 }

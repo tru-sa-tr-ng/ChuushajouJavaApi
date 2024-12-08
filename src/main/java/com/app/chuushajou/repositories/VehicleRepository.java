@@ -13,11 +13,12 @@ import java.util.Optional;
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     @Query("SELECT v FROM Vehicle v WHERE " +
             "(:customer_id IS NULL OR v.customer.id = :customer_id) AND " +
-            "(:type_id IS NULL OR v.type.id = :type_id)")
+            "(:type_id IS NULL OR v.type.id = :type_id) AND" +
+            "(:license IS NULL OR v.license LIKE %:license%)")
     Page<Vehicle> find(@Param("customer_id") Long customerId,
-                       @Param("type_id") Long vehicleId, Pageable pageable);
-
-    @Query("SELECT v FROM Vehicle v WHERE v.license = :license_plate")
-    Optional<Vehicle> findByLicensePlate(@Param("license_plate") String licensePlate);
+                       @Param("type_id") Long vehicleId,
+                       @Param("license") String license,
+                       Pageable pageable);
+    Optional<Vehicle> findByLicense(String licensePlate);
 
 }
