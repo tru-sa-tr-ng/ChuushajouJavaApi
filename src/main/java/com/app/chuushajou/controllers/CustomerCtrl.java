@@ -55,11 +55,6 @@ public class CustomerCtrl {
         }
     }
 
-    @PostConstruct
-    public void createGuestCustomer() {
-        customerService.createGuestCustomer();
-    }
-
     @PostMapping("/create")
     public ResponseEntity<?> createCustomer(@RequestBody CustomerDTO customerDTO) {
         try {

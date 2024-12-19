@@ -1,18 +1,34 @@
 package com.app.chuushajou.controllers;
 
+import com.app.chuushajou.dtos.ParkingDTO;
+import com.app.chuushajou.libs.PageInfo;
 import com.app.chuushajou.libs.ResMap;
 import com.app.chuushajou.models.Parking;
 import com.app.chuushajou.services.ParkingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/parking")
+@RequestMapping("/parkings")
 public class ParkingCtrl {
+
+
     private final ParkingService parkingService;
+
+    @GetMapping("")
+    public ResponseEntity<?> getParkings(@RequestParam(value = "page", defaultValue = "1") int page,
+                                         @RequestParam(value = "limit", defaultValue = "10") int limit){
+        PageRequest pageRequest = PageRequest.of(page-1, limit);
+        Page<ParkingDTO> parkingPage = parkingService.getParkings(pageRequest);
+        return ResponseEntity.ok(
+                PageInfo.of(parkingPage, page, limit)
+        );
+    }
 
     @PostMapping("/{parkingId}/add_vehicle/{vehicleId}")
     public ResponseEntity<?> addVehicleToParking(@PathVariable Long parkingId, @PathVariable Long vehicleId) {
