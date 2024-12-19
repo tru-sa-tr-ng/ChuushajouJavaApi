@@ -78,7 +78,7 @@ public class TicketService {
         Customer customer = ticket.getVehicle().getCustomer();
 
         if (customer == null || customer.getId() == 0 ) {
-            return "Please pay with tiền mặt(t ngu tiếng anh nên để thg nào vào nhìn được thì fix sau nhé)";
+            return "Please pay with tiền mặt";
         } else {
             Long remain = customer.getRemain();
             if (remain < ticket.getTotal()) throw new RuntimeException("Customer has not enough money to pay for this ticket: " + customer.getRemain());

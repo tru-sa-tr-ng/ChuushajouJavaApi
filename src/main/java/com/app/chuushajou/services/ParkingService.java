@@ -7,6 +7,8 @@ import com.app.chuushajou.models.Vehicle;
 import com.app.chuushajou.repositories.ParkingRepository;
 import com.app.chuushajou.repositories.VehicleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,12 +69,9 @@ public class ParkingService {
         return parking.getVehicles().size();
     }
 
-    public ParkingDTO getParking(long parkingId){
-        Optional<Parking> parkingOpt = parkingRepository.findById(parkingId);
-        if (parkingOpt.isEmpty()) throw new RuntimeException("Parking not found");
+    public Page<ParkingDTO> getParkings(PageRequest pageRequest){
 
-        Parking parking = parkingOpt.get();
-        return ParkingDTO.getParkingFromModel(parking);
+        return parkingRepository.findAll(pageRequest).map(ParkingDTO::getParkingFromModel);
     }
 
 }
