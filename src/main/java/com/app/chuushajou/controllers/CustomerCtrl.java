@@ -4,11 +4,8 @@ package com.app.chuushajou.controllers;
 
 import com.app.chuushajou.libs.PageInfo;
 import com.app.chuushajou.libs.ResMap;
-import com.app.chuushajou.models.Customer;
 import com.app.chuushajou.dtos.CustomerDTO;
-import com.app.chuushajou.repositories.CustomerRepository;
 import com.app.chuushajou.services.CustomerService;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,14 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 
 @RestController
 @RequestMapping("/customers")
 @RequiredArgsConstructor
 public class CustomerCtrl {
     private final CustomerService customerService;
-    private final CustomerRepository customerRepository;
 
     @GetMapping("")
     public ResponseEntity<?> getCustomers (
