@@ -10,7 +10,8 @@ import org.springframework.data.repository.query.Param;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query("SELECT c FROM Customer c WHERE " +
             "(:search IS NULL OR c.customer_name LIKE %:search%) OR " +
-            "(:search IS NULL OR c.phone_number LIKE %:search%)")
+            "(:search IS NULL OR c.phone_number LIKE %:search%)" +
+            "ORDER BY c.createdAt DESC")
     Page<Customer> findCustomers(@Param("search") String search,
                                  Pageable pageable);
 }

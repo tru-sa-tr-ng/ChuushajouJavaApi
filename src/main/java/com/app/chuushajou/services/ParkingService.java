@@ -1,77 +1,20 @@
 package com.app.chuushajou.services;
 
 import com.app.chuushajou.dtos.ParkingDTO;
-import com.app.chuushajou.models.Parking;
-import com.app.chuushajou.models.Ticket;
-import com.app.chuushajou.models.Vehicle;
-import com.app.chuushajou.repositories.ParkingRepository;
-import com.app.chuushajou.repositories.VehicleRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-public class ParkingService {
-    private final ParkingRepository parkingRepository;
-    private final VehicleRepository vehicleRepository;
+public interface ParkingService {
 
 
-    public Integer addVehicleToParking(long parkingId, long vehicleId) {
-        Optional<Parking> parkingOpt = parkingRepository.findById(parkingId);
-        if (parkingOpt.isEmpty()) throw new RuntimeException("Parking not found");
+    Integer addVehicleToParking(long parkingId, long vehicleId);
 
-        Parking parking = parkingOpt.get();
-        if (parking.getAvaiableSlot() == 0) throw new RuntimeException("Parking is full");
+    Integer removeVehicleFromParking(long parkingId, long vehicleId);
 
-        Optional<Vehicle> vehicleOpt = vehicleRepository.findById(vehicleId);
-        if (vehicleOpt.isEmpty()) throw new RuntimeException("Vehicle not found");
+    Integer getVehicleCountInParking(long parkingId);
 
-        Vehicle vehicle = vehicleOpt.get();
-        if (parking.getVehicles().contains(vehicle)) throw new RuntimeException("Vehicle already parked");
-
-        vehicle.setParking(parking);
-        parking.getVehicles().add(vehicle);
-        parkingRepository.save(parking);
-
-        return parking.getAvaiableSlot();
-    }
-
-    public Integer removeVehicleFromParking(long parkingId, long vehicleId) {
-        Optional<Parking> parkingOpt = parkingRepository.findById(parkingId);
-        if (parkingOpt.isEmpty()) throw new RuntimeException("Parking not found");
-
-        Parking parking = parkingOpt.get();
-
-        Optional<Vehicle> vehicleOpt = vehicleRepository.findById(vehicleId);
-        if (vehicleOpt.isEmpty()) throw new RuntimeException("Vehicle not found");
-
-        Vehicle vehicle = vehicleOpt.get();
-        if (!parking.getVehicles().contains(vehicle)) throw new RuntimeException("Vehicle is not parked in this parking");
-
-        vehicle.setParking(null);
-        parking.getVehicles().remove(vehicle);
-        parkingRepository.save(parking);
-
-        return parking.getAvaiableSlot();
-    }
-
-    public int getVehicleCountInParking(long parkingId) {
-        Optional<Parking> parkingOpt = parkingRepository.findById(parkingId);
-        if (parkingOpt.isEmpty()) throw new RuntimeException("Parking not found");
-
-        Parking parking = parkingOpt.get();
-        return parking.getVehicles().size();
-    }
-
-    public Page<ParkingDTO> getParkings(PageRequest pageRequest){
-
-        return parkingRepository.findAll(pageRequest).map(ParkingDTO::getParkingFromModel);
-    }
+    Page<ParkingDTO> getParkings(PageRequest pageRequest);
 
 }
