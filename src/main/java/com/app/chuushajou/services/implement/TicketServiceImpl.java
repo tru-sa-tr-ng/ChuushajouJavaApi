@@ -88,9 +88,6 @@ public class TicketServiceImpl implements TicketService {
             else ticket.getVehicle().getCustomer().setRemain(remain - ticket.getTotal());
             return ticket;
         }
-
-
-
     }
 
 

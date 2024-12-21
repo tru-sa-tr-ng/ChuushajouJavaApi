@@ -14,4 +14,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "ORDER BY c.createdAt DESC")
     Page<Customer> findCustomers(@Param("search") String search,
                                  Pageable pageable);
+
+
+    @Query("SELECT c FROM Customer c WHERE c.phone_number = :phoneNumber")
+    Customer findCustomerByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
 }

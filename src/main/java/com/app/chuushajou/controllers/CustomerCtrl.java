@@ -35,9 +35,9 @@ public class CustomerCtrl {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCustomerById(@PathVariable("id") Long customerId) {
+    public ResponseEntity<?> getCustomer(@PathVariable("id") Long customerId) {
         try {
-            CustomerDTO customerDTO = customerService.getCustomerById(customerId);
+            CustomerDTO customerDTO = customerService.getCustomer(customerId);
             return ResponseEntity.ok(
                     ResMap.of(
                             "status", "success",
@@ -49,6 +49,23 @@ public class CustomerCtrl {
             );
         }
     }
+
+    @GetMapping("/phone/{phone_num}")
+    public ResponseEntity<?> getCustomer(@PathVariable("phone_num") String phoneNum) {
+        try {
+            CustomerDTO customerDTO = customerService.getCustomer(phoneNum);
+            return ResponseEntity.ok(
+                    ResMap.of(
+                            "status", "success",
+                            "data", ResMap.of("customer", customerDTO))
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ResMap.of("status", "error", "message", e.getMessage())
+            );
+        }
+    }
+
 
     @PostMapping("/create")
     public ResponseEntity<?> createCustomer(@RequestBody CustomerDTO customerDTO) {

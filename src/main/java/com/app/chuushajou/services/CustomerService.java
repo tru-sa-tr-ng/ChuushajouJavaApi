@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 public interface CustomerService {
     Page<CustomerDTO> getCustomers(String search, PageRequest pageRequest);
 
-    CustomerDTO getCustomerById(long id);
+    CustomerDTO getCustomer(long id);
+
+    CustomerDTO getCustomer(String phone_num);
 
     CustomerDTO createCustomer(CustomerDTO customerDTO);
 
