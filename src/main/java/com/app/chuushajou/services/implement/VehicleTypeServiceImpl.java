@@ -5,9 +5,9 @@ import com.app.chuushajou.models.VehicleType;
 import com.app.chuushajou.repositories.VehicleTypeRepository;
 import com.app.chuushajou.services.VehicleTypeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,8 +15,8 @@ public class VehicleTypeServiceImpl implements VehicleTypeService {
     private final VehicleTypeRepository vehicleTypeRepository;
 
     @Override
-    public Page<VehicleTypeDTO> getVehicleTypes(PageRequest pageRequest){
-        return vehicleTypeRepository.findAll(pageRequest).map(VehicleTypeDTO::getVehicleTypeFromModel);
+    public List<VehicleTypeDTO> getVehicleTypes(){
+        return vehicleTypeRepository.findAll().stream().map(VehicleTypeDTO::getVehicleTypeFromModel).toList();
     }
 
     @Override

@@ -18,6 +18,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Page<CustomerDTO> getCustomers(String search, PageRequest pageRequest){
         return customerRepository.findCustomers(search, pageRequest).map(CustomerDTO::getCustomerFromModel);
     }
+
     @Override
     public CustomerDTO getCustomer(long id) {
         Customer customer = customerRepository.findById(id).orElseThrow();
