@@ -38,6 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setCustomer_name(customerDTO.getCustomer_name());
         customer.setPhone_number(customerDTO.getPhone_number());
         customer.setAddress(customerDTO.getAddress());
+        customer.setRemain(customerDTO.getRemain());
         customer.setCreatedAt(customerDTO.getCreatedAt());
         customer.setUpdatedAt(customerDTO.getUpdatedAt());
 

@@ -16,7 +16,6 @@ public interface VehicleService {
 
     VehicleDTO updateVehicle(VehicleDTO vehicleDTO, long id);
 
-
     VehicleDTO deleteVehicle(long id);
 
 }
