@@ -62,4 +62,46 @@ public class ParkingCtrl {
             );
         }
     }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createParking(@RequestBody ParkingDTO parkingDTO){
+        try {
+            ParkingDTO newParking = parkingService.createParking(parkingDTO);
+            return ResponseEntity.ok(
+                    ResMap.of("status", "success", "data", newParking)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ResMap.of("status", "error", "message", e.getMessage())
+            );
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateParking(@RequestBody ParkingDTO parkingDTO, @PathVariable Long id){
+        try {
+            ParkingDTO updatedParking = parkingService.updateParking(parkingDTO, id);
+            return ResponseEntity.ok(
+                    ResMap.of("status", "success", "data", updatedParking)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ResMap.of("status", "error", "message", e.getMessage())
+            );
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteParking(@PathVariable Long id){
+        try {
+            ParkingDTO removedParking = parkingService.deleteParking(id);
+            return ResponseEntity.ok(
+                    ResMap.of("status", "success", "message", "Parking removed successfully", "data", removedParking)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ResMap.of("status", "error", "message", e.getMessage())
+            );
+        }
+    }
 }
