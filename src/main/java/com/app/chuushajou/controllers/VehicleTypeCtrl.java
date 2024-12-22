@@ -2,15 +2,14 @@ package com.app.chuushajou.controllers;
 
 
 import com.app.chuushajou.dtos.VehicleTypeDTO;
-import com.app.chuushajou.libs.PageInfo;
 import com.app.chuushajou.libs.ResMap;
 import com.app.chuushajou.services.VehicleTypeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/vehicle_types")
@@ -19,15 +18,14 @@ public class VehicleTypeCtrl {
     private final VehicleTypeService vehicleTypeService;
 
     @GetMapping("")
-    public ResponseEntity<?> getVehicleTypes (
-            @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "limit", defaultValue = "10") int limit)
+    public ResponseEntity<?> getVehicleTypes ()
     {
-        PageRequest pageRequest = PageRequest.of(page-1, limit);
-        Page<VehicleTypeDTO> vehicleTypePage = vehicleTypeService.getVehicleTypes(pageRequest);
+        List<VehicleTypeDTO> vehicleTypeList = vehicleTypeService.getVehicleTypes();
 
         return ResponseEntity.ok(
-                PageInfo.of(vehicleTypePage, page, limit)
+                ResMap.of(
+                        "status", "success",
+                        "data", vehicleTypeList)
         );
     }
 
