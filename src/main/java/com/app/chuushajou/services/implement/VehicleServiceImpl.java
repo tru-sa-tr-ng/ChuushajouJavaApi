@@ -40,6 +40,7 @@ public class VehicleServiceImpl implements VehicleService {
         else {
             Optional<Customer> customerOpt = customerRepository.findById(vehicleDTO.getCustomerId());
             if (customerOpt.isEmpty()) throw new RuntimeException("Can not found customer with id = " + vehicleDTO.getCustomerId());
+            else vehicle.setCustomer(customerOpt.get());
         }
         vehicle.setLicense(vehicleDTO.getLicense());
         vehicle.setColor(vehicleDTO.getColor());

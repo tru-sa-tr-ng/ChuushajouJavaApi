@@ -14,7 +14,8 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     @Query("SELECT v FROM Vehicle v WHERE " +
             "(:customer_id IS NULL OR v.customer.id = :customer_id) AND " +
             "(:type_id IS NULL OR v.type.id = :type_id) AND" +
-            "(:license IS NULL OR v.license LIKE %:license%)")
+            "(:license IS NULL OR v.license LIKE %:license%)" +
+            "ORDER BY v.createdAt DESC")
     Page<Vehicle> find(@Param("customer_id") Long customerId,
                        @Param("type_id") Long vehicleId,
                        @Param("license") String license,
