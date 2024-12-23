@@ -76,5 +76,46 @@ public class ParkingServiceImpl implements ParkingService {
         return parkingRepository.findAll(pageRequest).map(ParkingDTO::getParkingFromModel);
     }
 
+    @Override
+    public ParkingDTO updateParking(ParkingDTO parkingDTO, long id) {
+        Parking parking = parkingRepository.findById(id).orElseThrow();
+
+        if (parkingDTO.getName() != null)
+            parking.setName(parkingDTO.getName());
+
+        if (parkingDTO.getLocation() != null)
+            parking.setLocation(parkingDTO.getLocation());
+
+        if (parkingDTO.getMaxSlot() != null)
+            parking.setMaxSlot(parkingDTO.getMaxSlot());
+
+
+        return ParkingDTO.getParkingFromModel(parkingRepository.save(parking));
+    }
+
+    @Override
+    public ParkingDTO deleteParking(long id) {
+        Parking parking = parkingRepository.findById(id).orElseThrow();
+
+        parkingRepository.delete(parking);
+        return ParkingDTO.getParkingFromModel(parking);
+    }
+
+    @Override
+    public ParkingDTO getParkingById(long id) {
+        Parking parking = parkingRepository.findById(id).orElseThrow();
+        return ParkingDTO.getParkingFromModel(parking);
+    }
+
+    @Override
+    public ParkingDTO createParking(ParkingDTO parkingDTO) {
+        Parking parking = new Parking();
+        parking.setName(parkingDTO.getName());
+        parking.setLocation(parkingDTO.getLocation());
+        parking.setMaxSlot(parkingDTO.getMaxSlot());
+
+        return ParkingDTO.getParkingFromModel(parkingRepository.save(parking));
+    }
+
 }
 

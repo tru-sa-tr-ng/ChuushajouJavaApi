@@ -17,4 +17,11 @@ public interface ParkingService {
 
     Page<ParkingDTO> getParkings(PageRequest pageRequest);
 
+    ParkingDTO updateParking(ParkingDTO parkingDTO, long id);
+
+    ParkingDTO deleteParking(long id);
+
+    ParkingDTO getParkingById(long id);
+
+    ParkingDTO createParking(ParkingDTO parkingDTO);
 }
